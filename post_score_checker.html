@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post Score Checker · Marketing Content Optimizer</title>
+  <style>
+    /* ── Reset & tokens ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f5f6f8;
+      --surface:   #ffffff;
+      --border:    #e2e5ea;
+      --text:      #1a1d23;
+      --muted:     #6b7280;
+      --accent:    #2563eb;
+      --accent-lt: #eff6ff;
+
+      --gold:      #b45309;
+      --gold-bg:   #fefce8;
+      --gold-bd:   #fde68a;
+      --silver:    #475569;
+      --silver-bg: #f1f5f9;
+      --silver-bd: #cbd5e1;
+      --bronze:    #92400e;
+      --bronze-bg: #fff7ed;
+      --bronze-bd: #fed7aa;
+      --poor:      #991b1b;
+      --poor-bg:   #fef2f2;
+      --poor-bd:   #fecaca;
+
+      --green:     #15803d;
+      --green-bg:  #f0fdf4;
+      --green-bd:  #bbf7d0;
+      --yellow:    #a16207;
+      --yellow-bg: #fefce8;
+      --yellow-bd: #fde68a;
+      --red:       #991b1b;
+      --red-bg:    #fef2f2;
+      --red-bd:    #fecaca;
+
+      --radius:    10px;
+      --shadow:    0 1px 4px rgba(0,0,0,.08);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Layout ───────────────────────────────────────────────────── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    header svg { flex-shrink: 0; }
+    header h1  { font-size: 1.15rem; font-weight: 700; }
+    header p   { font-size: .82rem; color: var(--muted); margin-top: 1px; }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .page { grid-template-columns: 1fr; }
+    }
+
+    /* ── Card ─────────────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+    .card-title {
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* ── Form ─────────────────────────────────────────────────────── */
+    label {
+      display: block;
+      font-size: .84rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    label span { font-weight: 400; color: var(--muted); }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: .9rem;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--surface);
+      transition: border-color .15s;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+    }
+    textarea { min-height: 180px; line-height: 1.55; }
+
+    .field { margin-bottom: 20px; }
+
+    .char-count {
+      font-size: .75rem;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn:hover { background: #1d4ed8; }
+    .btn:disabled { background: #93c5fd; cursor: not-allowed; }
+
+    .error-banner {
+      background: var(--red-bg);
+      border: 1px solid var(--red-bd);
+      color: var(--red);
+      padding: 12px 14px;
+      border-radius: 7px;
+      font-size: .84rem;
+      margin-top: 14px;
+      display: none;
+    }
+
+    /* ── Results panel ────────────────────────────────────────────── */
+    #results { display: none; }
+
+    /* Score hero */
+    .score-hero {
+      text-align: center;
+      padding: 24px 16px 20px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      border: 2px solid var(--border);
+    }
+    .score-hero .label  { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+    .score-hero .number { font-size: 3.8rem; font-weight: 800; line-height: 1; margin: 6px 0; }
+    .score-hero .tier   { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 700; margin-bottom: 10px; }
+    .score-hero .tagline { font-size: .84rem; color: var(--muted); }
+
+    .tier-gold   { color: var(--gold);   background: var(--gold-bg);   border: 1px solid var(--gold-bd); }
+    .tier-silver { color: var(--silver); background: var(--silver-bg); border: 1px solid var(--silver-bd); }
+    .tier-bronze { color: var(--bronze); background: var(--bronze-bg); border: 1px solid var(--bronze-bd); }
+    .tier-poor   { color: var(--poor);   background: var(--poor-bg);   border: 1px solid var(--poor-bd); }
+
+    /* Score bar */
+    .score-bar-wrap { margin-bottom: 20px; }
+    .score-bar-track {
+      height: 10px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width .6s ease;
+    }
+    .bar-benchmarks {
+      display: flex;
+      justify-content: space-between;
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    /* Dimension rows */
+    .dim-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .dim {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .dim-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .dim-body { flex: 1; }
+    .dim-label { font-size: .8rem; font-weight: 700; color: var(--text); }
+    .dim-tip   { font-size: .78rem; color: var(--muted); margin-top: 3px; line-height: 1.45; }
+    .dim-badge {
+      flex-shrink: 0;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge-green  { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-bd); }
+    .badge-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-bd); }
+    .badge-red    { background: var(--red-bg);    color: var(--red);    border: 1px solid var(--red-bd); }
+
+    /* Brief template */
+    .brief { margin-bottom: 20px; }
+    .brief-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .brief-item {
+      background: var(--accent-lt);
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .brief-item .bi-label { font-size: .72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }
+    .brief-item .bi-val   { font-size: .88rem; font-weight: 600; color: var(--text); margin-top: 3px; }
+
+    .formats-list { list-style: none; }
+    .formats-list li {
+      font-size: .82rem;
+      color: var(--muted);
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .formats-list li:last-child { border: none; }
+    .formats-list li::before { content: "→"; color: var(--accent); font-weight: 700; }
+
+    /* Guidance box */
+    .guidance-box {
+      border-radius: 8px;
+      padding: 14px;
+      font-size: .83rem;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      border: 1px solid;
+    }
+    .guidance-box strong { display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+    .guidance-box.info   { background: var(--accent-lt); border-color: #bfdbfe; color: #1e3a8a; }
+    .guidance-box.warn   { background: var(--yellow-bg); border-color: var(--yellow-bd); color: #78350f; }
+    .guidance-box.ok     { background: var(--green-bg);  border-color: var(--green-bd);  color: #14532d; }
+    .guidance-box.bad    { background: var(--red-bg);    border-color: var(--red-bd);    color: var(--red); }
+
+    /* Top posts table */
+    .top-posts { font-size: .8rem; }
+    .top-posts table { width: 100%; border-collapse: collapse; }
+    .top-posts th {
+      text-align: left;
+      padding: 6px 8px;
+      background: var(--bg);
+      border-bottom: 2px solid var(--border);
+      font-size: .73rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .top-posts td {
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+    .top-posts tr:last-child td { border: none; }
+    .top-posts .score-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: .75rem;
+    }
+
+    /* ── Loader ───────────────────────────────────────────────────── */
+    #loader { display: none; text-align: center; padding: 40px 0; color: var(--muted); font-size: .9rem; }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Benchmark legend (sidebar) ───────────────────────────────── */
+    .legend-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: .82rem; }
+    .legend-row:last-child { border: none; }
+    .legend-label { color: var(--muted); }
+    .legend-val   { font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+    <rect width="34" height="34" rx="8" fill="#2563eb"/>
+    <path d="M9 25 L17 10 L25 25" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="17" cy="10" r="2.5" fill="white"/>
+    <line x1="11" y1="20" x2="23" y2="20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <div>
+    <h1>Post Score Checker</h1>
+    <p>Marketing Content Optimization System · v1</p>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ── Left: Input form ──────────────────────────────────────── -->
+  <div>
+    <div class="card">
+      <div class="card-title">Check a new post</div>
+
+      <div class="field">
+        <label>Post Title</label>
+        <input type="text" id="inp-title" placeholder="e.g. Why You Should Add Yoga Flow to Your Weekly Routine" maxlength="120" />
+        <div class="char-count"><span id="title-len">0</span> / 120</div>
+      </div>
+
+      <div class="field">
+        <label>Topic Category</label>
+        <select id="inp-category">
+          <option value="">— Select a category —</option>
+          <option>Aquatics &amp; Swim School</option>
+          <option>Equipment Upgrades</option>
+          <option>Facility Operations</option>
+          <option>Group Fitness</option>
+          <option>Health &amp; Wellness</option>
+          <option>Programs &amp; Enrolments</option>
+          <option>Trainer Spotlight</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Content Body <span>(paste your draft here)</span></label>
+        <textarea id="inp-content" placeholder="Paste your full post content…"></textarea>
+        <div class="char-count"><span id="word-count">0</span> words · est. <span id="read-time">0</span> min read</div>
+      </div>
+
+      <button class="btn" id="btn-check" onclick="runCheck()">Analyse Post</button>
+      <div class="error-banner" id="error-msg"></div>
+    </div>
+
+    <!-- Results inject here on mobile -->
+    <div id="results-mobile"></div>
+  </div>
+
+  <!-- ── Right: Results + sidebar ──────────────────────────────── -->
+  <div>
+    <div id="loader">
+      <div class="spinner"></div>
+      Analysing post…
+    </div>
+
+    <div id="results">
+      <!-- Score hero -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="score-hero" id="hero"></div>
+
+        <div class="score-bar-wrap">
+          <div class="score-bar-track">
+            <div class="score-bar-fill" id="score-bar"></div>
+          </div>
+          <div class="bar-benchmarks">
+            <span>0</span>
+            <span id="bar-publish-line">Publish min</span>
+            <span>Target 60</span>
+            <span>Great 80</span>
+            <span>100</span>
+          </div>
+        </div>
+
+        <div class="dim-list" id="dimensions"></div>
+      </div>
+
+      <!-- Actionable guidance -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title">Actionable Guidance</div>
+        <div id="guidance-boxes"></div>
+      </div>
+
+      <!-- Post brief template -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title">Post Brief — Benchmark for this Category</div>
+        <div id="brief-section"></div>
+      </div>
+
+      <!-- Top posts in category -->
+      <div class="card">
+        <div class="card-title">Top Posts in This Category</div>
+        <div class="top-posts" id="top-posts-table"></div>
+      </div>
+    </div>
+
+    <!-- Benchmark legend (always visible) -->
+    <div class="card" style="margin-top:16px;" id="legend-card">
+      <div class="card-title">Overall Benchmarks</div>
+      <div id="legend-content"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let BENCH = null;
+
+// ── Load benchmarks.json ───────────────────────────────────────────────────
+async function loadBenchmarks() {
+  try {
+    const res = await fetch("benchmarks.json");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    BENCH = await res.json();
+    renderLegend();
+  } catch (e) {
+    showError("Could not load benchmarks.json — make sure you've run build_benchmarks.py first.");
+  }
+}
+
+// ── Word count & reading time ──────────────────────────────────────────────
+function updateWordCount() {
+  const text  = document.getElementById("inp-content").value.trim();
+  const words = text ? text.split(/\s+/).length : 0;
+  const mins  = Math.max(1, Math.round(words / 200));
+  document.getElementById("word-count").textContent = words.toLocaleString();
+  document.getElementById("read-time").textContent  = mins;
+}
+
+function getTitleLen() {
+  const v = document.getElementById("inp-title").value.length;
+  document.getElementById("title-len").textContent = v;
+}
+
+// ── Scoring helpers ────────────────────────────────────────────────────────
+function readingTimeScore(mins) {
+  if (mins >= 2 && mins <= 4) return 100;
+  if (mins < 2)  return Math.max(0, 100 - (2 - mins) * 35);
+  return Math.max(0, 100 - (mins - 4) * 20);
+}
+
+// Estimate a pseudo-score without the real view_count & SEO matrix
+// We use benchmark medians for the metric distributions as stand-ins,
+// then allow the reading-time dimension to show real signal.
+// The "projected" score uses category benchmarks to show what this post
+// SHOULD achieve if written to the winning formula.
+function projectScore(category, readMins) {
+  const b  = BENCH.by_topic[category];
+  const ov = BENCH.overall;
+
+  // Use category avg percentile position as proxy for metric scores
+  const avgViewPct   = (b.avg_views   / ov.view_count.p90)   * 100;
+  const avgLinkPct   = (b.avg_seo_linkdex  / 90)  * 100;
+  const avgContentPct= (b.avg_seo_content  / 90)  * 100;
+  const rtScore      = readingTimeScore(readMins);
+
+  const score =
+    Math.min(100, avgViewPct)  * 0.30 +
+    Math.min(100, avgLinkPct)  * 0.25 +
+    Math.min(100, avgContentPct) * 0.25 +
+    rtScore * 0.20;
+
+  return Math.round(score * 10) / 10;
+}
+
+function getTier(score) {
+  if (score >= 80) return { label: "Gold",       cls: "tier-gold"   };
+  if (score >= 60) return { label: "Silver",     cls: "tier-silver" };
+  if (score >= 40) return { label: "Bronze",     cls: "tier-bronze" };
+  return                 { label: "Needs Work",  cls: "tier-poor"   };
+}
+
+function tierTagline(tier) {
+  const map = {
+    "Gold":       "Top-tier projection — write to the winning formula below.",
+    "Silver":     "Solid projection — small SEO or depth improvements push to Gold.",
+    "Bronze":     "Needs improvement — focus on SEO scores and content depth.",
+    "Needs Work": "Below benchmark — review category guidance and title format.",
+  };
+  return map[tier] || "";
+}
+
+function barColor(score) {
+  if (score >= 80) return "#b45309";
+  if (score >= 60) return "#2563eb";
+  if (score >= 40) return "#92400e";
+  return "#991b1b";
+}
+
+// ── Reading-time dimension ─────────────────────────────────────────────────
+function readTimeDim(mins, bench) {
+  const score  = readingTimeScore(mins);
+  const ideal  = bench.brief_template.ideal_reading_time;
+  let badge, badgeCls, tip;
+
+  if (mins >= 2 && mins <= 4) {
+    badge = "Ideal"; badgeCls = "badge-green";
+    tip = `${mins} min is in the sweet spot (${ideal.min}–${ideal.max} min for this category).`;
+  } else if (mins < 2) {
+    badge = "Too Short"; badgeCls = "badge-red";
+    tip = BENCH.guidance.reading_time.too_short;
+  } else {
+    badge = "Long"; badgeCls = "badge-yellow";
+    tip = BENCH.guidance.reading_time.too_long;
+  }
+
+  return { icon: "⏱", label: `Reading Time · ${mins} min`, badge, badgeCls, tip };
+}
+
+// ── SEO Linkdex dimension ──────────────────────────────────────────────────
+function linkdexDim(targetScore) {
+  // We don't know the actual value — show the target instead
+  const g = BENCH.guidance.seo_linkdex;
+  return {
+    icon: "🔗",
+    label: `SEO Focus Keyword (Linkdex) · Target ≥ ${targetScore}`,
+    badge: `Target ${targetScore}`,
+    badgeCls: "badge-yellow",
+    tip: `Category benchmark: aim for ${targetScore}+ to match top performers. ${g.fair.tip}`,
+  };
+}
+
+// ── SEO Content dimension ──────────────────────────────────────────────────
+function contentDim(targetScore) {
+  const g = BENCH.guidance.seo_content;
+  return {
+    icon: "📝",
+    label: `SEO Content Quality · Target ≥ ${targetScore}`,
+    badge: `Target ${targetScore}`,
+    badgeCls: "badge-yellow",
+    tip: `Category benchmark: aim for ${targetScore}+ to match top performers. ${g.fair.tip}`,
+  };
+}
+
+// ── Title dimension ────────────────────────────────────────────────────────
+function titleDim(title, formats) {
+  const low = title.toLowerCase();
+  const matched = formats.some(f => {
+    if (f.startsWith("Why You Should") && low.includes("why you should")) return true;
+    if (f.startsWith("The [Adjective]") && /^the (surprising|amazing|real|hidden)/.test(low)) return true;
+    if (f.startsWith("Trainer Spotlight") && low.includes("trainer spotlight")) return true;
+    return false;
+  });
+
+  return {
+    icon: "✏️",
+    label: "Title Format",
+    badge: matched ? "Matches Winner" : "Custom",
+    badgeCls: matched ? "badge-green" : "badge-yellow",
+    tip: matched
+      ? "Your title format matches a winning pattern for this category."
+      : `Top-performing titles in this category use: ${formats.slice(0, 2).join(", ")}.`,
+  };
+}
+
+// ── Render dimension row ───────────────────────────────────────────────────
+function renderDim({ icon, label, badge, badgeCls, tip }) {
+  return `
+    <div class="dim">
+      <div class="dim-icon">${icon}</div>
+      <div class="dim-body">
+        <div class="dim-label">${label}</div>
+        <div class="dim-tip">${tip}</div>
+      </div>
+      <div class="dim-badge ${badgeCls}">${badge}</div>
+    </div>`;
+}
+
+// ── Guidance boxes ─────────────────────────────────────────────────────────
+function buildGuidance(tier, readMins, category, score, bench) {
+  const boxes = [];
+  const ov = BENCH.overall;
+  const g  = BENCH.guidance;
+
+  // Tier guidance
+  const tierCls = { "Gold": "ok", "Silver": "info", "Bronze": "warn", "Needs Work": "bad" };
+  boxes.push(`<div class="guidance-box ${tierCls[tier]}">
+    <strong>🏆 Value Score · ${score} / 100</strong>
+    ${g.tiers[tier]}
+  </div>`);
+
+  // Publish-readiness
+  const minPub = bench.brief_template.min_value_score_before_publish;
+  if (score < minPub) {
+    boxes.push(`<div class="guidance-box bad">
+      <strong>⚠️ Below Publish Threshold</strong>
+      This category's minimum before publishing is <strong>${minPub}</strong>. Improve SEO scores or content depth before going live.
+    </div>`);
+  } else {
+    boxes.push(`<div class="guidance-box ok">
+      <strong>✅ Above Publish Threshold</strong>
+      Exceeds the minimum score of ${minPub} for this category. Good to proceed — optimise further for Gold.
+    </div>`);
+  }
+
+  // Reading time guidance
+  if (readMins < 2) {
+    boxes.push(`<div class="guidance-box warn">
+      <strong>⏱ Content Too Short</strong>
+      ${g.reading_time.too_short}
+    </div>`);
+  } else if (readMins > 4) {
+    boxes.push(`<div class="guidance-box warn">
+      <strong>⏱ Content Length</strong>
+      ${g.reading_time.too_long}
+    </div>`);
+  }
+
+  // SEO targets
+  boxes.push(`<div class="guidance-box info">
+    <strong>🎯 SEO Targets for ${category}</strong>
+    Aim for SEO Linkdex ≥ <strong>${bench.brief_template.target_seo_linkdex}</strong>
+    and SEO Content Score ≥ <strong>${bench.brief_template.target_seo_content}</strong>
+    to match top performers in this category.
+    (Overall site targets: Linkdex ≥ ${ov.seo_linkdex.target_min}, Content ≥ ${ov.seo_content_score.target_min}.)
+  </div>`);
+
+  return boxes.join("");
+}
+
+// ── Brief template section ─────────────────────────────────────────────────
+function renderBrief(bench) {
+  const t = bench.brief_template;
+  const fmts = t.winning_title_formats.map(f => `<li>${f}</li>`).join("");
+
+  return `
+    <div class="brief-grid">
+      <div class="brief-item">
+        <div class="bi-label">Ideal Reading Time</div>
+        <div class="bi-val">${t.ideal_reading_time.min}–${t.ideal_reading_time.max} min</div>
+      </div>
+      <div class="brief-item">
+        <div class="bi-label">Min Value Score</div>
+        <div class="bi-val">${t.min_value_score_before_publish} (before publish)</div>
+      </div>
+      <div class="brief-item">
+        <div class="bi-label">Target SEO Linkdex</div>
+        <div class="bi-val">≥ ${t.target_seo_linkdex}</div>
+      </div>
+      <div class="brief-item">
+        <div class="bi-label">Target SEO Content</div>
+        <div class="bi-val">≥ ${t.target_seo_content}</div>
+      </div>
+    </div>
+    <div class="card-title" style="margin-bottom:8px;">Winning Title Formats</div>
+    <ul class="formats-list">${fmts}</ul>`;
+}
+
+// ── Top posts table ────────────────────────────────────────────────────────
+function renderTopPosts(posts) {
+  const rows = posts.map(p => {
+    const tier = getTier(p.value_score);
+    const color = barColor(p.value_score);
+    return `<tr>
+      <td>${p.title.replace(/\s*-\s*Update\s*\d+$/i, "")}</td>
+      <td style="text-align:center;">
+        <span class="score-badge" style="background:${color}22;color:${color};border:1px solid ${color}44;">
+          ${p.value_score}
+        </span>
+      </td>
+      <td style="text-align:center;">${p.read_mins} min</td>
+    </tr>`;
+  }).join("");
+
+  return `<table>
+    <thead><tr><th>Title</th><th>Score</th><th>Read</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+// ── Legend sidebar ─────────────────────────────────────────────────────────
+function renderLegend() {
+  if (!BENCH) return;
+  const ov = BENCH.overall;
+  const rows = [
+    ["Total posts analysed",  ov.total_posts],
+    ["Avg value score",       ov.value_score.mean],
+    ["Median value score",    ov.value_score.median],
+    ["Top 25% threshold",     ov.value_score.p75],
+    ["Top 10% threshold",     ov.value_score.p90],
+    ["Avg views per post",    ov.view_count.mean.toLocaleString()],
+    ["Target SEO Linkdex",    "≥ " + ov.seo_linkdex.target_min],
+    ["Target SEO Content",    "≥ " + ov.seo_content_score.target_min],
+    ["Ideal reading time",    `${ov.reading_time_minutes.ideal_min}–${ov.reading_time_minutes.ideal_max} min`],
+    ["Undervalued posts",     ov.undervalued_count + " (high SEO, low views)"],
+    ["Overexposed posts",     ov.overexposed_count + " (high views, low SEO)"],
+  ];
+  document.getElementById("legend-content").innerHTML =
+    rows.map(([l, v]) => `<div class="legend-row"><span class="legend-label">${l}</span><span class="legend-val">${v}</span></div>`).join("");
+}
+
+// ── Main check ────────────────────────────────────────────────────────────
+function runCheck() {
+  clearError();
+  const title    = document.getElementById("inp-title").value.trim();
+  const category = document.getElementById("inp-category").value;
+  const content  = document.getElementById("inp-content").value.trim();
+
+  if (!title)    { showError("Please enter a post title."); return; }
+  if (!category) { showError("Please select a topic category."); return; }
+  if (!content)  { showError("Please paste your content body."); return; }
+  if (!BENCH)    { showError("Benchmarks not loaded. Check that benchmarks.json exists."); return; }
+
+  // Show loader
+  document.getElementById("loader").style.display  = "block";
+  document.getElementById("results").style.display = "none";
+  document.getElementById("btn-check").disabled     = true;
+
+  setTimeout(() => {
+    try {
+      const words   = content.split(/\s+/).length;
+      const readMins = Math.max(1, Math.min(4, Math.round(words / 200)));
+      const bench   = BENCH.by_topic[category];
+      const score   = projectScore(category, readMins);
+      const { label: tier, cls: tierCls } = getTier(score);
+
+      // ── Hero
+      document.getElementById("hero").innerHTML = `
+        <div class="label">Projected Value Score</div>
+        <div class="number" style="color:${barColor(score)}">${score}</div>
+        <div class="tier ${tierCls}">${tier}</div>
+        <div class="tagline">${tierTagline(tier)}</div>`;
+
+      // ── Score bar
+      const bar = document.getElementById("score-bar");
+      bar.style.width = score + "%";
+      bar.style.background = barColor(score);
+      document.getElementById("bar-publish-line").textContent =
+        "Publish min " + bench.brief_template.min_value_score_before_publish;
+
+      // ── Dimensions
+      const dims = [
+        readTimeDim(readMins, bench),
+        linkdexDim(bench.brief_template.target_seo_linkdex),
+        contentDim(bench.brief_template.target_seo_content),
+        titleDim(title, bench.brief_template.winning_title_formats),
+      ];
+      document.getElementById("dimensions").innerHTML = dims.map(renderDim).join("");
+
+      // ── Guidance
+      document.getElementById("guidance-boxes").innerHTML =
+        buildGuidance(tier, readMins, category, score, bench);
+
+      // ── Brief template
+      document.getElementById("brief-section").innerHTML = renderBrief(bench);
+
+      // ── Top posts
+      document.getElementById("top-posts-table").innerHTML =
+        renderTopPosts(bench.top_posts);
+
+      // Show results
+      document.getElementById("loader").style.display  = "none";
+      document.getElementById("results").style.display = "block";
+    } catch (err) {
+      showError("Scoring error: " + err.message);
+      document.getElementById("loader").style.display = "none";
+    }
+    document.getElementById("btn-check").disabled = false;
+  }, 400);
+}
+
+function showError(msg) {
+  const el = document.getElementById("error-msg");
+  el.textContent = msg;
+  el.style.display = "block";
+}
+function clearError() {
+  document.getElementById("error-msg").style.display = "none";
+}
+
+// ── Events ─────────────────────────────────────────────────────────────────
+document.getElementById("inp-content").addEventListener("input", updateWordCount);
+document.getElementById("inp-title").addEventListener("input", getTitleLen);
+
+// ── Init ───────────────────────────────────────────────────────────────────
+loadBenchmarks();
+</script>
+</body>
+</html>

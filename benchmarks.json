@@ -1,0 +1,748 @@
+{
+  "_meta": {
+    "generated": "2026-05-30 12:20",
+    "source": "facility_news_posts_export.csv",
+    "total_posts": 300,
+    "scoring_weights": {
+      "view_count": "30%",
+      "seo_linkdex": "25%",
+      "seo_content_score": "25%",
+      "estimated_reading_time_minutes": "20%"
+    }
+  },
+  "overall": {
+    "total_posts": 300,
+    "date_range": {
+      "from": "2023-01-06 06:54:00",
+      "to": "2026-04-14 16:24:00"
+    },
+    "value_score": {
+      "mean": 58.3,
+      "median": 58.5,
+      "p75": 69.8,
+      "p90": 77.8,
+      "min_to_publish": 54.3,
+      "target_good": 60.0,
+      "target_great": 80.0
+    },
+    "view_count": {
+      "mean": 2431.0,
+      "median": 2458.0,
+      "p75": 3756.0,
+      "p90": 4428.0
+    },
+    "seo_linkdex": {
+      "mean": 62.1,
+      "median": 64.0,
+      "target_min": 75.0
+    },
+    "seo_content_score": {
+      "mean": 72.2,
+      "median": 75.0,
+      "target_min": 80.0
+    },
+    "reading_time_minutes": {
+      "mean": 2.5,
+      "ideal_min": 2,
+      "ideal_max": 4
+    },
+    "tier_counts": {
+      "Bronze": 134,
+      "Silver": 117,
+      "Needs Work": 30,
+      "Gold": 19
+    },
+    "undervalued_count": 73,
+    "overexposed_count": 70
+  },
+  "by_topic": {
+    "Aquatics & Swim School": {
+      "post_count": 80,
+      "avg_value_score": 58.5,
+      "avg_views": 2571.0,
+      "avg_seo_linkdex": 62.4,
+      "avg_seo_content": 73.0,
+      "brief_template": {
+        "ideal_reading_time": {
+          "min": 1,
+          "max": 3
+        },
+        "target_seo_linkdex": 75.0,
+        "target_seo_content": 80.0,
+        "min_value_score_before_publish": 55.7,
+        "winning_title_formats": [
+          "Upcoming / Notice of [Operational Update]",
+          "[Program] \u2013 Enrolments/Bookings Open"
+        ]
+      },
+      "top_posts": [
+        {
+          "title": "Swim School Enrolments Now Open for Term 2 - Update 3",
+          "value_score": 87.8,
+          "views": 4754,
+          "seo_linkdex": 90,
+          "seo_content": 80,
+          "read_mins": 2
+        },
+        {
+          "title": "Upcoming Temporary Closure: 25m Indoor Heated Pool Maintenance - Update 5",
+          "value_score": 84.5,
+          "views": 3827,
+          "seo_linkdex": 82,
+          "seo_content": 90,
+          "read_mins": 2
+        },
+        {
+          "title": "Upcoming Temporary Closure: 50m Outdoor Pool Maintenance - Update 4",
+          "value_score": 80.2,
+          "views": 4114,
+          "seo_linkdex": 82,
+          "seo_content": 80,
+          "read_mins": 4
+        },
+        {
+          "title": "Notice of Limited Lane Availability: School Swimming Carnival - Update 3",
+          "value_score": 78.7,
+          "views": 2788,
+          "seo_linkdex": 82,
+          "seo_content": 90,
+          "read_mins": 4
+        },
+        {
+          "title": "Upcoming Temporary Closure: 25m Indoor Heated Pool Maintenance - Update 2",
+          "value_score": 78.2,
+          "views": 4438,
+          "seo_linkdex": 60,
+          "seo_content": 90,
+          "read_mins": 3
+        }
+      ]
+    },
+    "Equipment Upgrades": {
+      "post_count": 33,
+      "avg_value_score": 51.8,
+      "avg_views": 2030.0,
+      "avg_seo_linkdex": 55.7,
+      "avg_seo_content": 69.1,
+      "brief_template": {
+        "ideal_reading_time": {
+          "min": 1,
+          "max": 3
+        },
+        "target_seo_linkdex": 68.4,
+        "target_seo_content": 80.0,
+        "min_value_score_before_publish": 46.5,
+        "winning_title_formats": [
+          "New Upgrade: Brand New [Equipment] Arriving Soon!"
+        ]
+      },
+      "top_posts": [
+        {
+          "title": "New Upgrade: Brand New Concept2 Rowers Arriving Soon! - Update 5",
+          "value_score": 84.4,
+          "views": 3071,
+          "seo_linkdex": 90,
+          "seo_content": 90,
+          "read_mins": 2
+        },
+        {
+          "title": "New Upgrade: Brand New Hammer Strength Squat Racks Arriving Soon!",
+          "value_score": 78.7,
+          "views": 3544,
+          "seo_linkdex": 75,
+          "seo_content": 90,
+          "read_mins": 2
+        },
+        {
+          "title": "New Upgrade: Brand New Free Weight Zone Arriving Soon! - Update 3",
+          "value_score": 76.7,
+          "views": 4804,
+          "seo_linkdex": 45,
+          "seo_content": 90,
+          "read_mins": 3
+        },
+        {
+          "title": "New Upgrade: Brand New Hammer Strength Squat Racks Arriving Soon! - Update 2",
+          "value_score": 75.7,
+          "views": 4021,
+          "seo_linkdex": 75,
+          "seo_content": 80,
+          "read_mins": 2
+        },
+        {
+          "title": "New Upgrade: Brand New Hammer Strength Squat Racks Arriving Soon! - Update 3",
+          "value_score": 63.8,
+          "views": 1469,
+          "seo_linkdex": 82,
+          "seo_content": 90,
+          "read_mins": 1
+        }
+      ]
+    },
+    "Facility Operations": {
+      "post_count": 41,
+      "avg_value_score": 59.5,
+      "avg_views": 2669.0,
+      "avg_seo_linkdex": 60.8,
+      "avg_seo_content": 71.0,
+      "brief_template": {
+        "ideal_reading_time": {
+          "min": 1,
+          "max": 4
+        },
+        "target_seo_linkdex": 75.0,
+        "target_seo_content": 90.0,
+        "min_value_score_before_publish": 57.3,
+        "winning_title_formats": [
+          "[Season/Event] Opening Hours / Schedule Update",
+          "Upcoming / Notice of [Operational Update]"
+        ]
+      },
+      "top_posts": [
+        {
+          "title": "Winter Facility Opening Hours Schedule - Update 4",
+          "value_score": 89.4,
+          "views": 4040,
+          "seo_linkdex": 90,
+          "seo_content": 90,
+          "read_mins": 3
+        },
+        {
+          "title": "Spring Facility Opening Hours Schedule",
+          "value_score": 87.4,
+          "views": 3762,
+          "seo_linkdex": 90,
+          "seo_content": 90,
+          "read_mins": 4
+        },
+        {
+          "title": "Summer Facility Opening Hours Schedule - Update 4",
+          "value_score": 82.7,
+          "views": 3624,
+          "seo_linkdex": 82,
+          "seo_content": 90,
+          "read_mins": 2
+        },
+        {
+          "title": "Upcoming Temporary Closure: Leisure Splash Pad Maintenance",
+          "value_score": 81.2,
+          "views": 4839,
+          "seo_linkdex": 75,
+          "seo_content": 80,
+          "read_mins": 4
+        },
+        {
+          "title": "Autumn Facility Opening Hours Schedule - Update 2",
+          "value_score": 79.9,
+          "views": 4655,
+          "seo_linkdex": 60,
+          "seo_content": 90,
+          "read_mins": 3
+        }
+      ]
+    },
+    "Group Fitness": {
+      "post_count": 40,
+      "avg_value_score": 57.6,
+      "avg_views": 2250.0,
+      "avg_seo_linkdex": 60.6,
+      "avg_seo_content": 72.8,
+      "brief_template": {
+        "ideal_reading_time": {
+          "min": 1,
+          "max": 3
+        },
+        "target_seo_linkdex": 82.0,
+        "target_seo_content": 90.0,
+        "min_value_score_before_publish": 53.5,
+        "winning_title_formats": [
+          "Why You Should Add [X] to Your Weekly Routine",
+          "[Season/Event] Opening Hours / Schedule Update"
+        ]
+      },
+      "top_posts": [
+        {
+          "title": "Why You Should Add Senior Functional Fitness to Your Weekly Routine - Update 3",
+          "value_score": 84.8,
+          "views": 3180,
+          "seo_linkdex": 90,
+          "seo_content": 90,
+          "read_mins": 3
+        },
+        {
+          "title": "Group Fitness Timetable Update - Effective December 2025",
+          "value_score": 83.6,
+          "views": 2971,
+          "seo_linkdex": 90,
+          "seo_content": 90,
+          "read_mins": 2
+        },
+        {
+          "title": "Why You Should Add Senior Functional Fitness to Your Weekly Routine - Update 5",
+          "value_score": 79.0,
+          "views": 4770,
+          "seo_linkdex": 82,
+          "seo_content": 70,
+          "read_mins": 2
+        },
+        {
+          "title": "Why You Should Add HIIT Circuit to Your Weekly Routine - Update 2",
+          "value_score": 78.7,
+          "views": 3201,
+          "seo_linkdex": 90,
+          "seo_content": 80,
+          "read_mins": 2
+        },
+        {
+          "title": "Why You Should Add BodyPump to Your Weekly Routine - Update 5",
+          "value_score": 76.3,
+          "views": 4732,
+          "seo_linkdex": 45,
+          "seo_content": 90,
+          "read_mins": 3
+        }
+      ]
+    },
+    "Health & Wellness": {
+      "post_count": 55,
+      "avg_value_score": 60.0,
+      "avg_views": 2431.0,
+      "avg_seo_linkdex": 64.5,
+      "avg_seo_content": 72.4,
+      "brief_template": {
+        "ideal_reading_time": {
+          "min": 2,
+          "max": 4
+        },
+        "target_seo_linkdex": 82.0,
+        "target_seo_content": 80.0,
+        "min_value_score_before_publish": 55.8,
+        "winning_title_formats": [
+          "The [Adjective] Health Benefits of [X]",
+          "Custom format"
+        ]
+      },
+      "top_posts": [
+        {
+          "title": "The Surprising Health Benefits of Aqua Aerobics - Update 3",
+          "value_score": 82.8,
+          "views": 4606,
+          "seo_linkdex": 64,
+          "seo_content": 90,
+          "read_mins": 2
+        },
+        {
+          "title": "Community Wellness Morning Tea & Seminar - Update 3",
+          "value_score": 82.2,
+          "views": 3991,
+          "seo_linkdex": 90,
+          "seo_content": 90,
+          "read_mins": 1
+        },
+        {
+          "title": "The Surprising Health Benefits of Hydrotherapy Swim - Update 5",
+          "value_score": 81.4,
+          "views": 4371,
+          "seo_linkdex": 82,
+          "seo_content": 80,
+          "read_mins": 3
+        },
+        {
+          "title": "Community Wellness Morning Tea & Seminar - Update 5",
+          "value_score": 81.2,
+          "views": 2620,
+          "seo_linkdex": 90,
+          "seo_content": 90,
+          "read_mins": 4
+        },
+        {
+          "title": "The Surprising Health Benefits of Hydrotherapy Swim - Update 5",
+          "value_score": 80.5,
+          "views": 3048,
+          "seo_linkdex": 82,
+          "seo_content": 90,
+          "read_mins": 4
+        }
+      ]
+    },
+    "Programs & Enrolments": {
+      "post_count": 24,
+      "avg_value_score": 60.3,
+      "avg_views": 2420.0,
+      "avg_seo_linkdex": 71.0,
+      "avg_seo_content": 72.9,
+      "brief_template": {
+        "ideal_reading_time": {
+          "min": 1,
+          "max": 3
+        },
+        "target_seo_linkdex": 82.0,
+        "target_seo_content": 80.0,
+        "min_value_score_before_publish": 54.2,
+        "winning_title_formats": [
+          "[Program] \u2013 Enrolments/Bookings Open"
+        ]
+      },
+      "top_posts": [
+        {
+          "title": "School Holiday Activity Program - Bookings Open! - Update 5",
+          "value_score": 86.2,
+          "views": 4510,
+          "seo_linkdex": 90,
+          "seo_content": 80,
+          "read_mins": 2
+        },
+        {
+          "title": "School Holiday Activity Program - Bookings Open! - Update 4",
+          "value_score": 83.7,
+          "views": 4087,
+          "seo_linkdex": 90,
+          "seo_content": 80,
+          "read_mins": 3
+        },
+        {
+          "title": "School Holiday Activity Program - Bookings Open! - Update 3",
+          "value_score": 82.8,
+          "views": 4782,
+          "seo_linkdex": 90,
+          "seo_content": 70,
+          "read_mins": 3
+        },
+        {
+          "title": "School Holiday Activity Program - Bookings Open! - Update 4",
+          "value_score": 77.5,
+          "views": 3762,
+          "seo_linkdex": 82,
+          "seo_content": 80,
+          "read_mins": 4
+        },
+        {
+          "title": "School Holiday Activity Program - Bookings Open! - Update 4",
+          "value_score": 77.0,
+          "views": 2568,
+          "seo_linkdex": 82,
+          "seo_content": 90,
+          "read_mins": 4
+        }
+      ]
+    },
+    "Trainer Spotlight": {
+      "post_count": 27,
+      "avg_value_score": 58.9,
+      "avg_views": 2425.0,
+      "avg_seo_linkdex": 60.7,
+      "avg_seo_content": 74.1,
+      "brief_template": {
+        "ideal_reading_time": {
+          "min": 2,
+          "max": 4
+        },
+        "target_seo_linkdex": 75.0,
+        "target_seo_content": 82.0,
+        "min_value_score_before_publish": 52.9,
+        "winning_title_formats": [
+          "Trainer Spotlight: Meet [Name]"
+        ]
+      },
+      "top_posts": [
+        {
+          "title": "Trainer Spotlight: Meet Michael Chang - Update 5",
+          "value_score": 82.6,
+          "views": 2800,
+          "seo_linkdex": 90,
+          "seo_content": 90,
+          "read_mins": 4
+        },
+        {
+          "title": "Trainer Spotlight: Meet Sarah Jenkins - Update 3",
+          "value_score": 79.8,
+          "views": 4654,
+          "seo_linkdex": 60,
+          "seo_content": 90,
+          "read_mins": 4
+        },
+        {
+          "title": "Trainer Spotlight: Meet James Wilson - Update 5",
+          "value_score": 79.2,
+          "views": 4145,
+          "seo_linkdex": 90,
+          "seo_content": 70,
+          "read_mins": 4
+        },
+        {
+          "title": "Trainer Spotlight: Meet James Wilson",
+          "value_score": 75.7,
+          "views": 2396,
+          "seo_linkdex": 82,
+          "seo_content": 90,
+          "read_mins": 4
+        },
+        {
+          "title": "Trainer Spotlight: Meet Michael Chang - Update 2",
+          "value_score": 73.6,
+          "views": 2590,
+          "seo_linkdex": 75,
+          "seo_content": 90,
+          "read_mins": 2
+        }
+      ]
+    }
+  },
+  "opportunities": {
+    "undervalued": [
+      {
+        "title": "Public Holiday Opening Hours - Good Friday - Update 2",
+        "topic_category": "Facility Operations",
+        "value_score": 77.0,
+        "views": 1984,
+        "seo_linkdex": 90,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      },
+      {
+        "title": "Trainer Spotlight: Meet James Wilson",
+        "topic_category": "Trainer Spotlight",
+        "value_score": 75.7,
+        "views": 2396,
+        "seo_linkdex": 82,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      },
+      {
+        "title": "The Surprising Health Benefits of Aqua Aerobics - Update 2",
+        "topic_category": "Health & Wellness",
+        "value_score": 75.5,
+        "views": 2381,
+        "seo_linkdex": 82,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      },
+      {
+        "title": "Group Fitness Timetable Update - Effective December 2025 - Update 3",
+        "topic_category": "Group Fitness",
+        "value_score": 74.6,
+        "views": 2236,
+        "seo_linkdex": 82,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      },
+      {
+        "title": "Notice of Limited Lane Availability: School Swimming Carnival - Update 2",
+        "topic_category": "Aquatics & Swim School",
+        "value_score": 73.6,
+        "views": 1348,
+        "seo_linkdex": 90,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      },
+      {
+        "title": "The Surprising Health Benefits of Hydrotherapy Swim",
+        "topic_category": "Health & Wellness",
+        "value_score": 71.1,
+        "views": 2265,
+        "seo_linkdex": 75,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      },
+      {
+        "title": "Why You Should Add BodyPump to Your Weekly Routine - Update 4",
+        "topic_category": "Group Fitness",
+        "value_score": 70.6,
+        "views": 2182,
+        "seo_linkdex": 75,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      },
+      {
+        "title": "Swim School Enrolments Now Open for Term 4 - Update 4",
+        "topic_category": "Aquatics & Swim School",
+        "value_score": 70.0,
+        "views": 1991,
+        "seo_linkdex": 75,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      },
+      {
+        "title": "Summer Facility Opening Hours Schedule - Update 4",
+        "topic_category": "Facility Operations",
+        "value_score": 68.9,
+        "views": 2385,
+        "seo_linkdex": 64,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      },
+      {
+        "title": "Notice of Limited Lane Availability: School Swimming Carnival - Update 5",
+        "topic_category": "Aquatics & Swim School",
+        "value_score": 68.4,
+        "views": 2306,
+        "seo_linkdex": 64,
+        "seo_content": 90,
+        "action": "High SEO strength but low visibility \u2014 push via social or internal linking."
+      }
+    ],
+    "overexposed": [
+      {
+        "title": "Trainer Spotlight: Meet Michael Chang - Update 3",
+        "topic_category": "Trainer Spotlight",
+        "value_score": 69.6,
+        "views": 4838,
+        "seo_linkdex": 60,
+        "seo_content": 70,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      },
+      {
+        "title": "The Surprising Health Benefits of Aqua Aerobics - Update 3",
+        "topic_category": "Health & Wellness",
+        "value_score": 59.8,
+        "views": 4812,
+        "seo_linkdex": 45,
+        "seo_content": 60,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      },
+      {
+        "title": "New Upgrade: Brand New Free Weight Zone Arriving Soon! - Update 3",
+        "topic_category": "Equipment Upgrades",
+        "value_score": 76.7,
+        "views": 4804,
+        "seo_linkdex": 45,
+        "seo_content": 90,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      },
+      {
+        "title": "Why You Should Add BodyPump to Your Weekly Routine - Update 5",
+        "topic_category": "Group Fitness",
+        "value_score": 76.3,
+        "views": 4732,
+        "seo_linkdex": 45,
+        "seo_content": 90,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      },
+      {
+        "title": "Why You Should Add Senior Functional Fitness to Your Weekly Routine - Update 3",
+        "topic_category": "Group Fitness",
+        "value_score": 69.2,
+        "views": 4687,
+        "seo_linkdex": 75,
+        "seo_content": 60,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      },
+      {
+        "title": "Trainer Spotlight: Meet James Wilson - Update 4",
+        "topic_category": "Trainer Spotlight",
+        "value_score": 66.2,
+        "views": 4636,
+        "seo_linkdex": 30,
+        "seo_content": 80,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      },
+      {
+        "title": "Swim School Enrolments Now Open for Term 2 - Update 2",
+        "topic_category": "Aquatics & Swim School",
+        "value_score": 51.1,
+        "views": 4546,
+        "seo_linkdex": 45,
+        "seo_content": 60,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      },
+      {
+        "title": "Why You Should Add Pilates Reformer to Your Weekly Routine - Update 5",
+        "topic_category": "Group Fitness",
+        "value_score": 71.9,
+        "views": 4541,
+        "seo_linkdex": 30,
+        "seo_content": 90,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      },
+      {
+        "title": "Community Wellness Morning Tea & Seminar - Update 5",
+        "topic_category": "Health & Wellness",
+        "value_score": 49.1,
+        "views": 4540,
+        "seo_linkdex": 0,
+        "seo_content": 0,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      },
+      {
+        "title": "Spring Facility Opening Hours Schedule - Update 4",
+        "topic_category": "Facility Operations",
+        "value_score": 61.8,
+        "views": 4512,
+        "seo_linkdex": 60,
+        "seo_content": 60,
+        "action": "Getting traffic but weak SEO \u2014 optimise meta, headings & keyword use to lock in organic growth."
+      }
+    ]
+  },
+  "gap_analysis": {
+    "overall_avg_value_score": 58.1,
+    "underperforming_topics": {
+      "Equipment Upgrades": {
+        "avg_value_score": 51.8,
+        "vs_overall": -6.3,
+        "suggestion": "Below-average pillar \u2014 review SEO quality and content depth for this category."
+      },
+      "Group Fitness": {
+        "avg_value_score": 57.6,
+        "vs_overall": -0.5,
+        "suggestion": "Below-average pillar \u2014 review SEO quality and content depth for this category."
+      }
+    },
+    "seasonal_gaps": {
+      "September": {
+        "posts": 14,
+        "avg": 25.0,
+        "suggestion": "Content volume below average \u2014 plan 1\u20132 extra posts this month."
+      }
+    }
+  },
+  "guidance": {
+    "tiers": {
+      "Gold": "Top performer \u2014 study this post's formula and replicate it.",
+      "Silver": "Solid. Small SEO or promotion improvements could push it to Gold.",
+      "Bronze": "Needs work. Improve SEO scores or expand thin content.",
+      "Needs Work": "Underperformer. Prioritise SEO fixes or reconsider the topic angle."
+    },
+    "reading_time": {
+      "too_short": "Under 2 min feels thin \u2014 add practical tips, examples, or an FAQ.",
+      "ideal": "2\u20134 min is the engagement sweet spot for this site.",
+      "too_long": "Over 4 min for a news post may reduce completion rate \u2014 consider splitting into a series."
+    },
+    "seo_linkdex": {
+      "poor": {
+        "range": "0\u201344",
+        "tip": "Focus keyword barely present \u2014 use it in the title, H2s, and opening paragraph."
+      },
+      "fair": {
+        "range": "45\u201363",
+        "tip": "Keyword usage is partial \u2014 strengthen meta description and add internal links."
+      },
+      "good": {
+        "range": "64\u201381",
+        "tip": "Good keyword integration. Check image alt text and URL slug."
+      },
+      "strong": {
+        "range": "82\u201390",
+        "tip": "Excellent SEO authority. Focus energy on promotion and distribution."
+      }
+    },
+    "seo_content": {
+      "poor": {
+        "range": "0\u201359",
+        "tip": "Content quality low \u2014 improve readability, structure, and keyword density."
+      },
+      "fair": {
+        "range": "60\u201374",
+        "tip": "Decent content. Add subheadings, bullet points, or a clear CTA."
+      },
+      "good": {
+        "range": "75\u201389",
+        "tip": "Strong content. Minor polish on transitions and CTAs will lift it further."
+      },
+      "strong": {
+        "range": "90",
+        "tip": "Maximum content score \u2014 this is the benchmark to write to."
+      }
+    }
+  }
+}
