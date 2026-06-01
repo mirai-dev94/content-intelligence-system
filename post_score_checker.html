@@ -303,6 +303,26 @@
       font-size: .75rem;
     }
 
+    /* ── Suggestion cards ─────────────────────────────────────────── */
+    .suggestion-list { display: flex; flex-direction: column; gap: 10px; }
+    .suggestion {
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: .83rem;
+      line-height: 1.5;
+    }
+    .suggestion.pass  { background: var(--green-bg);  border-color: var(--green-bd);  color: #14532d; }
+    .suggestion.warn  { background: var(--yellow-bg); border-color: var(--yellow-bd); color: #78350f; }
+    .suggestion .s-label { font-weight: 700; margin-bottom: 4px; }
+    .suggestion .s-try {
+      margin-top: 6px;
+      font-style: italic;
+      padding: 6px 10px;
+      background: rgba(0,0,0,.05);
+      border-radius: 5px;
+    }
+
     /* ── Loader ───────────────────────────────────────────────────── */
     #loader { display: none; text-align: center; padding: 40px 0; color: var(--muted); font-size: .9rem; }
     .spinner {
@@ -333,7 +353,7 @@
   </svg>
   <div>
     <h1>Post Score Checker</h1>
-    <p>Marketing Content Optimization System · v1</p>
+    <p>Marketing Content Optimization System · v2</p>
   </div>
 </header>
 
@@ -410,6 +430,12 @@
       <div class="card" style="margin-bottom:16px;">
         <div class="card-title">Actionable Guidance</div>
         <div id="guidance-boxes"></div>
+      </div>
+
+      <!-- Suggestions -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title">Suggestions</div>
+        <div class="suggestion-list" id="suggestions"></div>
       </div>
 
       <!-- Post brief template -->
@@ -538,50 +564,152 @@ function readTimeDim(mins, bench) {
   return { icon: "⏱", label: `Reading Time · ${mins} min`, badge, badgeCls, tip };
 }
 
-// ── SEO Linkdex dimension ──────────────────────────────────────────────────
-function linkdexDim(targetScore) {
-  // We don't know the actual value — show the target instead
-  const g = BENCH.guidance.seo_linkdex;
-  return {
-    icon: "🔗",
-    label: `SEO Focus Keyword (Linkdex) · Target ≥ ${targetScore}`,
-    badge: `Target ${targetScore}`,
-    badgeCls: "badge-yellow",
-    tip: `Category benchmark: aim for ${targetScore}+ to match top performers. ${g.fair.tip}`,
-  };
+// ── Category keywords for content check ───────────────────────────────────
+const CATEGORY_KEYWORDS = {
+  "Aquatics & Swim School":  ["swim", "aqua", "pool"],
+  "Equipment Upgrades":      ["upgrade", "equipment"],
+  "Facility Operations":     ["hours", "schedule", "closure"],
+  "Group Fitness":           ["fitness", "class", "routine"],
+  "Health & Wellness":       ["health", "wellness", "benefit"],
+  "Programs & Enrolments":   ["program", "enrolment", "booking"],
+  "Trainer Spotlight":       ["trainer", "coach"],
+};
+
+// ── Title format patterns per category (top 2) ────────────────────────────
+const TITLE_FORMATS = {
+  "Aquatics & Swim School": [
+    { test: t => /swim school|enrolment/.test(t), label: "Swim School Enrolments Now Open for Term [N]" },
+    { test: t => /surprising|benefit/.test(t),    label: "The Surprising Health Benefits of [X]" },
+  ],
+  "Equipment Upgrades": [
+    { test: t => /new upgrade|arriving/.test(t),  label: "New Upgrade: Brand New [Equipment] Arriving Soon!" },
+    { test: t => /brand new/.test(t),             label: "New Upgrade: Brand New [Equipment] Arriving Soon!" },
+  ],
+  "Facility Operations": [
+    { test: t => /opening hours|schedule/.test(t),label: "[Season] Facility Opening Hours Schedule" },
+    { test: t => /closure|maintenance/.test(t),   label: "Upcoming Temporary Closure: [Area] Maintenance" },
+  ],
+  "Group Fitness": [
+    { test: t => /why you should/.test(t),        label: "Why You Should Add [X] to Your Weekly Routine" },
+    { test: t => /timetable|group fitness/.test(t),label: "Group Fitness Timetable Update – Effective [Month]" },
+  ],
+  "Health & Wellness": [
+    { test: t => /surprising|benefit/.test(t),    label: "The Surprising Health Benefits of [X]" },
+    { test: t => /community|wellness/.test(t),    label: "Community Wellness [Event Name]" },
+  ],
+  "Programs & Enrolments": [
+    { test: t => /school holiday|bookings/.test(t),label: "School Holiday Activity Program – Bookings Open!" },
+    { test: t => /enrolment|term/.test(t),        label: "Swim School Enrolments Now Open for Term [N]" },
+  ],
+  "Trainer Spotlight": [
+    { test: t => /trainer spotlight|meet/.test(t),label: "Trainer Spotlight: Meet [Name]" },
+    { test: t => true,                            label: "Trainer Spotlight: Meet [Name]" },
+  ],
+};
+
+// ── Extract topic noun from title ──────────────────────────────────────────
+function extractTopic(title) {
+  // Strip common wrapper phrases to isolate the subject
+  return title
+    .replace(/why you should add|to your weekly routine/gi, "")
+    .replace(/the surprising health benefits of/gi, "")
+    .replace(/new upgrade: brand new|arriving soon!?/gi, "")
+    .replace(/upcoming temporary closure:|maintenance/gi, "")
+    .replace(/trainer spotlight: meet/gi, "")
+    .replace(/community wellness/gi, "")
+    .replace(/swim school enrolments now open for/gi, "")
+    .replace(/school holiday activity program|bookings open!?/gi, "")
+    .replace(/- update \d+/gi, "")
+    .replace(/[–—]/g, "")
+    .trim()
+    .replace(/\s+/g, " ")
+    || "this topic";
 }
 
-// ── SEO Content dimension ──────────────────────────────────────────────────
-function contentDim(targetScore) {
-  const g = BENCH.guidance.seo_content;
-  return {
-    icon: "📝",
-    label: `SEO Content Quality · Target ≥ ${targetScore}`,
-    badge: `Target ${targetScore}`,
-    badgeCls: "badge-yellow",
-    tip: `Category benchmark: aim for ${targetScore}+ to match top performers. ${g.fair.tip}`,
-  };
-}
-
-// ── Title dimension ────────────────────────────────────────────────────────
-function titleDim(title, formats) {
+// ── Build two specific title suggestions ──────────────────────────────────
+function buildTitleSuggestions(title, category) {
+  const topic = extractTopic(title);
+  const Topic = topic.charAt(0).toUpperCase() + topic.slice(1);
+  const formats = TITLE_FORMATS[category] || [];
   const low = title.toLowerCase();
-  const matched = formats.some(f => {
-    if (f.startsWith("Why You Should") && low.includes("why you should")) return true;
-    if (f.startsWith("The [Adjective]") && /^the (surprising|amazing|real|hidden)/.test(low)) return true;
-    if (f.startsWith("Trainer Spotlight") && low.includes("trainer spotlight")) return true;
-    return false;
-  });
 
-  return {
-    icon: "✏️",
-    label: "Title Format",
-    badge: matched ? "Matches Winner" : "Custom",
-    badgeCls: matched ? "badge-green" : "badge-yellow",
-    tip: matched
-      ? "Your title format matches a winning pattern for this category."
-      : `Top-performing titles in this category use: ${formats.slice(0, 2).join(", ")}.`,
+  // Check if title already matches a winning format
+  const matched = formats.some(f => f.test(low));
+
+  // Generate two concrete suggestions from top 2 formats
+  const suggestions = {
+    "Aquatics & Swim School":  [`The Surprising Health Benefits of ${Topic}`, `Swim School Enrolments Now Open – ${Topic}`],
+    "Equipment Upgrades":      [`New Upgrade: Brand New ${Topic} Arriving Soon!`, `Exciting New Addition: ${Topic} Now at Our Facility`],
+    "Facility Operations":     [`Spring Facility Opening Hours – ${Topic}`, `Important Update: ${Topic} Schedule Changes`],
+    "Group Fitness":           [`Why You Should Add ${Topic} to Your Weekly Routine`, `The Surprising Health Benefits of ${Topic}`],
+    "Health & Wellness":       [`The Surprising Health Benefits of ${Topic}`, `Community Wellness: ${Topic} Seminar`],
+    "Programs & Enrolments":   [`School Holiday Activity Program – ${Topic} Bookings Open!`, `${Topic} Enrolments Now Open`],
+    "Trainer Spotlight":       [`Trainer Spotlight: Meet ${Topic}`, `Meet Our Expert: ${Topic}`],
   };
+
+  return { matched, alts: suggestions[category] || [`The ${Topic} Guide`, `Everything You Need to Know About ${Topic}`] };
+}
+
+// ── Build suggestions section ──────────────────────────────────────────────
+function buildSuggestions(title, content, category) {
+  const cards = [];
+  const titleLow   = title.toLowerCase();
+  const contentLow = content.toLowerCase();
+  const combined   = titleLow + " " + contentLow;
+
+  // 1. Title format
+  const { matched, alts } = buildTitleSuggestions(title, category);
+  if (matched) {
+    cards.push(`<div class="suggestion pass">
+      <div class="s-label">✅ Title Format</div>
+      Your title matches a winning format for this category. Good start.
+    </div>`);
+  } else {
+    cards.push(`<div class="suggestion warn">
+      <div class="s-label">✏️ Title Format — try a proven format</div>
+      Top posts in this category use these formats:
+      <div class="s-try">→ ${alts[0]}</div>
+      <div class="s-try">→ ${alts[1]}</div>
+    </div>`);
+  }
+
+  // 2. Keyword presence
+  const keywords = CATEGORY_KEYWORDS[category] || [];
+  const hasKeyword = keywords.some(k => combined.includes(k));
+  if (hasKeyword) {
+    cards.push(`<div class="suggestion pass">
+      <div class="s-label">✅ Category Keyword</div>
+      Your content includes a relevant keyword for this category (${keywords.join(", ")}).
+    </div>`);
+  } else {
+    cards.push(`<div class="suggestion warn">
+      <div class="s-label">🔍 Category Keyword Missing</div>
+      Your title and content don't mention a core keyword for this category.
+      Try including one of: <strong>${keywords.join(", ")}</strong>.
+    </div>`);
+  }
+
+  // 3. Subheadings
+  const lines = content.split("\n").map(l => l.trim()).filter(Boolean);
+  const hasSubheadings = lines.some(l =>
+    l.startsWith("#") ||
+    (l.length < 60 && l === l.toUpperCase() && l.length > 4) ||
+    /^[A-Z][^.!?]{5,50}$/.test(l) && lines.indexOf(l) > 0
+  );
+  if (hasSubheadings) {
+    cards.push(`<div class="suggestion pass">
+      <div class="s-label">✅ Content Structure</div>
+      Subheadings detected — good for readability and SEO.
+    </div>`);
+  } else {
+    cards.push(`<div class="suggestion warn">
+      <div class="s-label">📋 Add Subheadings</div>
+      No subheadings found. Breaking your content into 2–3 sections
+      improves readability and helps readers scan quickly.
+    </div>`);
+  }
+
+  return cards.join("");
 }
 
 // ── Render dimension row ───────────────────────────────────────────────────
@@ -600,8 +728,7 @@ function renderDim({ icon, label, badge, badgeCls, tip }) {
 // ── Guidance boxes ─────────────────────────────────────────────────────────
 function buildGuidance(tier, readMins, category, score, bench) {
   const boxes = [];
-  const ov = BENCH.overall;
-  const g  = BENCH.guidance;
+  const g = BENCH.guidance;
 
   // Tier guidance
   const tierCls = { "Gold": "ok", "Silver": "info", "Bronze": "warn", "Needs Work": "bad" };
@@ -610,21 +737,7 @@ function buildGuidance(tier, readMins, category, score, bench) {
     ${g.tiers[tier]}
   </div>`);
 
-  // Publish-readiness
-  const minPub = bench.brief_template.min_value_score_before_publish;
-  if (score < minPub) {
-    boxes.push(`<div class="guidance-box bad">
-      <strong>⚠️ Below Publish Threshold</strong>
-      This category's minimum before publishing is <strong>${minPub}</strong>. Improve SEO scores or content depth before going live.
-    </div>`);
-  } else {
-    boxes.push(`<div class="guidance-box ok">
-      <strong>✅ Above Publish Threshold</strong>
-      Exceeds the minimum score of ${minPub} for this category. Good to proceed — optimise further for Gold.
-    </div>`);
-  }
-
-  // Reading time guidance
+  // Reading time guidance (only show if outside ideal band)
   if (readMins < 2) {
     boxes.push(`<div class="guidance-box warn">
       <strong>⏱ Content Too Short</strong>
@@ -637,15 +750,6 @@ function buildGuidance(tier, readMins, category, score, bench) {
     </div>`);
   }
 
-  // SEO targets
-  boxes.push(`<div class="guidance-box info">
-    <strong>🎯 SEO Targets for ${category}</strong>
-    Aim for SEO Linkdex ≥ <strong>${bench.brief_template.target_seo_linkdex}</strong>
-    and SEO Content Score ≥ <strong>${bench.brief_template.target_seo_content}</strong>
-    to match top performers in this category.
-    (Overall site targets: Linkdex ≥ ${ov.seo_linkdex.target_min}, Content ≥ ${ov.seo_content_score.target_min}.)
-  </div>`);
-
   return boxes.join("");
 }
 
@@ -655,22 +759,10 @@ function renderBrief(bench) {
   const fmts = t.winning_title_formats.map(f => `<li>${f}</li>`).join("");
 
   return `
-    <div class="brief-grid">
+    <div class="brief-grid" style="grid-template-columns:1fr;">
       <div class="brief-item">
         <div class="bi-label">Ideal Reading Time</div>
         <div class="bi-val">${t.ideal_reading_time.min}–${t.ideal_reading_time.max} min</div>
-      </div>
-      <div class="brief-item">
-        <div class="bi-label">Min Value Score</div>
-        <div class="bi-val">${t.min_value_score_before_publish} (before publish)</div>
-      </div>
-      <div class="brief-item">
-        <div class="bi-label">Target SEO Linkdex</div>
-        <div class="bi-val">≥ ${t.target_seo_linkdex}</div>
-      </div>
-      <div class="brief-item">
-        <div class="bi-label">Target SEO Content</div>
-        <div class="bi-val">≥ ${t.target_seo_content}</div>
       </div>
     </div>
     <div class="card-title" style="margin-bottom:8px;">Winning Title Formats</div>
@@ -710,11 +802,7 @@ function renderLegend() {
     ["Top 25% threshold",     ov.value_score.p75],
     ["Top 10% threshold",     ov.value_score.p90],
     ["Avg views per post",    ov.view_count.mean.toLocaleString()],
-    ["Target SEO Linkdex",    "≥ " + ov.seo_linkdex.target_min],
-    ["Target SEO Content",    "≥ " + ov.seo_content_score.target_min],
     ["Ideal reading time",    `${ov.reading_time_minutes.ideal_min}–${ov.reading_time_minutes.ideal_max} min`],
-    ["Undervalued posts",     ov.undervalued_count + " (high SEO, low views)"],
-    ["Overexposed posts",     ov.overexposed_count + " (high views, low SEO)"],
   ];
   document.getElementById("legend-content").innerHTML =
     rows.map(([l, v]) => `<div class="legend-row"><span class="legend-label">${l}</span><span class="legend-val">${v}</span></div>`).join("");
@@ -759,18 +847,19 @@ function runCheck() {
       document.getElementById("bar-publish-line").textContent =
         "Publish min " + bench.brief_template.min_value_score_before_publish;
 
-      // ── Dimensions
+      // ── Dimensions (reading time only now)
       const dims = [
         readTimeDim(readMins, bench),
-        linkdexDim(bench.brief_template.target_seo_linkdex),
-        contentDim(bench.brief_template.target_seo_content),
-        titleDim(title, bench.brief_template.winning_title_formats),
       ];
       document.getElementById("dimensions").innerHTML = dims.map(renderDim).join("");
 
       // ── Guidance
       document.getElementById("guidance-boxes").innerHTML =
         buildGuidance(tier, readMins, category, score, bench);
+
+      // ── Suggestions
+      document.getElementById("suggestions").innerHTML =
+        buildSuggestions(title, content, category);
 
       // ── Brief template
       document.getElementById("brief-section").innerHTML = renderBrief(bench);

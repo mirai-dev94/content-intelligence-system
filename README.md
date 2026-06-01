@@ -200,3 +200,16 @@ High-level findings from 300 posts (2023–2026):
 - [ ] Chart view: scatter plot of views vs SEO score
 - [ ] Export scored dataset to Excel for leadership reporting
 - [ ] Seasonal content calendar generator
+
+## Changelog
+
+### v2
+- Removed SEO metric fields from the marketing writer view (Linkdex, Content Score)
+- Added Suggestions section with 3 actionable text-based checks:
+  - Title format — detects winning patterns and suggests two specific alternatives
+  - Category keyword — checks if core keywords appear in title and content
+  - Subheadings — detects content structure
+- Simplified Overall Benchmarks sidebar to writer-relevant metrics only
+
+### v1
+- Initial release — post scoring, tier classification, category benchmarks, top posts reference
