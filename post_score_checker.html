@@ -610,7 +610,7 @@ const TITLE_FORMATS = {
 // ── Extract topic noun from title ──────────────────────────────────────────
 function extractTopic(title) {
   // Strip common wrapper phrases to isolate the subject
-  return title
+  let topic = title
     .replace(/why you should add|to your weekly routine/gi, "")
     .replace(/the surprising health benefits of/gi, "")
     .replace(/new upgrade: brand new|arriving soon!?/gi, "")
@@ -620,10 +620,18 @@ function extractTopic(title) {
     .replace(/swim school enrolments now open for/gi, "")
     .replace(/school holiday activity program|bookings open!?/gi, "")
     .replace(/- update \d+/gi, "")
-    .replace(/[–—]/g, "")
+    .replace(/[–—:!?]/g, "")
     .trim()
-    .replace(/\s+/g, " ")
-    || "this topic";
+    .replace(/\s+/g, " ");
+
+  // If nothing was stripped (title didn't match any pattern),
+  // take first 3 meaningful words as the topic
+  if (topic.length > 40 || topic === title.trim()) {
+    const words = topic.split(" ").filter(w => w.length > 2);
+    topic = words.slice(0, 3).join(" ");
+  }
+
+  return topic || "this topic";
 }
 
 // ── Build two specific title suggestions ──────────────────────────────────

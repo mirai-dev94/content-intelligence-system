@@ -139,7 +139,9 @@ def build():
     # ── Per-topic benchmarks + post brief templates ────────────────────────
     by_topic = {}
     for topic, grp in df.groupby("topic_category"):
-        top5 = grp.nlargest(5, "value_score")
+        top5 = grp.copy()
+        top5["base_title"] = top5["title"].str.replace(r"\s*-\s*Update\s*\d+$", "", regex=True).str.strip()
+        top5 = top5.sort_values("value_score", ascending=False).drop_duplicates("base_title").head(5)
         by_topic[topic] = {
             "post_count":          len(grp),
             "avg_value_score":     r(grp["value_score"].mean()),

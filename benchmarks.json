@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-05-30 12:20",
+    "generated": "2026-06-07 20:46",
     "source": "facility_news_posts_export.csv",
     "total_posts": 300,
     "scoring_weights": {
@@ -109,12 +109,12 @@
           "read_mins": 4
         },
         {
-          "title": "Upcoming Temporary Closure: 25m Indoor Heated Pool Maintenance - Update 2",
-          "value_score": 78.2,
-          "views": 4438,
-          "seo_linkdex": 60,
+          "title": "Upcoming Temporary Closure: Hydrotherapy Pool Maintenance - Update 5",
+          "value_score": 75.9,
+          "views": 3613,
+          "seo_linkdex": 64,
           "seo_content": 90,
-          "read_mins": 3
+          "read_mins": 2
         }
       ]
     },
@@ -162,20 +162,20 @@
           "read_mins": 3
         },
         {
-          "title": "New Upgrade: Brand New Hammer Strength Squat Racks Arriving Soon! - Update 2",
-          "value_score": 75.7,
-          "views": 4021,
+          "title": "New Upgrade: Brand New StairMaster StepMills Arriving Soon!",
+          "value_score": 63.4,
+          "views": 3789,
           "seo_linkdex": 75,
-          "seo_content": 80,
+          "seo_content": 60,
           "read_mins": 2
         },
         {
-          "title": "New Upgrade: Brand New Hammer Strength Squat Racks Arriving Soon! - Update 3",
-          "value_score": 63.8,
-          "views": 1469,
-          "seo_linkdex": 82,
-          "seo_content": 90,
-          "read_mins": 1
+          "title": "New Upgrade: Brand New Life Fitness Treadmills Arriving Soon! - Update 3",
+          "value_score": 55.3,
+          "views": 1054,
+          "seo_linkdex": 64,
+          "seo_content": 80,
+          "read_mins": 4
         }
       ]
     },
@@ -278,14 +278,6 @@
           "read_mins": 2
         },
         {
-          "title": "Why You Should Add Senior Functional Fitness to Your Weekly Routine - Update 5",
-          "value_score": 79.0,
-          "views": 4770,
-          "seo_linkdex": 82,
-          "seo_content": 70,
-          "read_mins": 2
-        },
-        {
           "title": "Why You Should Add HIIT Circuit to Your Weekly Routine - Update 2",
           "value_score": 78.7,
           "views": 3201,
@@ -300,6 +292,14 @@
           "seo_linkdex": 45,
           "seo_content": 90,
           "read_mins": 3
+        },
+        {
+          "title": "Why You Should Add Spin & Cycle to Your Weekly Routine",
+          "value_score": 74.4,
+          "views": 4606,
+          "seo_linkdex": 75,
+          "seo_content": 70,
+          "read_mins": 4
         }
       ]
     },
@@ -346,22 +346,6 @@
           "seo_linkdex": 82,
           "seo_content": 80,
           "read_mins": 3
-        },
-        {
-          "title": "Community Wellness Morning Tea & Seminar - Update 5",
-          "value_score": 81.2,
-          "views": 2620,
-          "seo_linkdex": 90,
-          "seo_content": 90,
-          "read_mins": 4
-        },
-        {
-          "title": "The Surprising Health Benefits of Hydrotherapy Swim - Update 5",
-          "value_score": 80.5,
-          "views": 3048,
-          "seo_linkdex": 82,
-          "seo_content": 90,
-          "read_mins": 4
         }
       ]
     },
@@ -391,38 +375,6 @@
           "seo_linkdex": 90,
           "seo_content": 80,
           "read_mins": 2
-        },
-        {
-          "title": "School Holiday Activity Program - Bookings Open! - Update 4",
-          "value_score": 83.7,
-          "views": 4087,
-          "seo_linkdex": 90,
-          "seo_content": 80,
-          "read_mins": 3
-        },
-        {
-          "title": "School Holiday Activity Program - Bookings Open! - Update 3",
-          "value_score": 82.8,
-          "views": 4782,
-          "seo_linkdex": 90,
-          "seo_content": 70,
-          "read_mins": 3
-        },
-        {
-          "title": "School Holiday Activity Program - Bookings Open! - Update 4",
-          "value_score": 77.5,
-          "views": 3762,
-          "seo_linkdex": 82,
-          "seo_content": 80,
-          "read_mins": 4
-        },
-        {
-          "title": "School Holiday Activity Program - Bookings Open! - Update 4",
-          "value_score": 77.0,
-          "views": 2568,
-          "seo_linkdex": 82,
-          "seo_content": 90,
-          "read_mins": 4
         }
       ]
     },
@@ -470,20 +422,20 @@
           "read_mins": 4
         },
         {
-          "title": "Trainer Spotlight: Meet James Wilson",
-          "value_score": 75.7,
-          "views": 2396,
+          "title": "Trainer Spotlight: Meet Jessica Taylor - Update 4",
+          "value_score": 66.9,
+          "views": 3955,
           "seo_linkdex": 82,
-          "seo_content": 90,
-          "read_mins": 4
+          "seo_content": 70,
+          "read_mins": 1
         },
         {
-          "title": "Trainer Spotlight: Meet Michael Chang - Update 2",
-          "value_score": 73.6,
-          "views": 2590,
-          "seo_linkdex": 75,
+          "title": "Trainer Spotlight: Meet David Smith",
+          "value_score": 64.0,
+          "views": 891,
+          "seo_linkdex": 90,
           "seo_content": 90,
-          "read_mins": 2
+          "read_mins": 1
         }
       ]
     }
