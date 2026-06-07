@@ -18,10 +18,13 @@ import re
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent))
 from post_value_score import compute_value_scores
 
-DATA_PATH   = Path(__file__).parent / "data" / "facility_news_posts_export.csv"
-OUTPUT_PATH = Path(__file__).parent / "benchmarks.json"
+DATA_PATH   = Path(__file__).parent.parent / "data" / "facility_news_posts_export.csv"
+OUTPUT_PATH = Path(__file__).parent.parent / "data" / "benchmarks.json"
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────

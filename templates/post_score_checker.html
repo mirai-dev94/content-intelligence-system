@@ -340,6 +340,78 @@
     .legend-row:last-child { border: none; }
     .legend-label { color: var(--muted); }
     .legend-val   { font-weight: 600; }
+
+    /* ── Tabs ─────────────────────────────────────────────────────── */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      padding: 16px 32px 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color .15s, border-color .15s;
+    }
+    .tab-btn:hover  { color: var(--text); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Planner ──────────────────────────────────────────────────── */
+    .planner-month {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .planner-month label { font-weight: 600; font-size: .9rem; white-space: nowrap; }
+    .planner-month select { max-width: 200px; }
+
+    .idea-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .idea-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: var(--surface);
+    }
+    .idea-topic {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+    .idea-title {
+      font-size: .92rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .idea-meta {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .tag {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: .76rem;
+      font-weight: 600;
+    }
+    .tag-miss { background: var(--red-bg);    color: var(--red);    border: 1px solid var(--red-bd); }
+    .tag-low  { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-bd); }
+    .tag-good { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-bd); }
   </style>
 </head>
 <body>
@@ -352,11 +424,18 @@
     <line x1="11" y1="20" x2="23" y2="20" stroke="white" stroke-width="2" stroke-linecap="round"/>
   </svg>
   <div>
-    <h1>Post Score Checker</h1>
-    <p>Marketing Content Optimization System · v2</p>
+    <h1>Marketing Content Optimizer</h1>
+    <p>Marketing Content Optimization System · v3</p>
   </div>
 </header>
 
+<nav class="tabs">
+  <button class="tab-btn active" onclick="switchTab('checker')">Post Checker</button>
+  <button class="tab-btn"        onclick="switchTab('planner')">What to Write</button>
+</nav>
+
+<!-- ── Tab 1: Post Checker ───────────────────────────────────────── -->
+<div id="tab-checker" class="tab-panel active">
 <div class="page">
 
   <!-- ── Left: Input form ──────────────────────────────────────── -->
@@ -458,20 +537,148 @@
     </div>
   </div>
 </div>
+</div> <!-- end tab-checker -->
+
+<!-- ── Tab 2: What to Write ─────────────────────────────────────── -->
+<div id="tab-planner" class="tab-panel">
+<div class="page" style="grid-template-columns: 1fr 380px;">
+
+  <!-- Left: month picker + post ideas -->
+  <div>
+    <div class="card">
+      <div class="card-title">What to Write</div>
+
+      <div class="planner-month">
+        <label>Pick a month</label>
+        <select id="planner-month" onchange="renderPlanner()">
+          <option value="">— Select a month —</option>
+          <option>January</option><option>February</option><option>March</option>
+          <option>April</option><option>May</option><option>June</option>
+          <option>July</option><option>August</option><option>September</option>
+          <option>October</option><option>November</option><option>December</option>
+        </select>
+      </div>
+
+      <div id="planner-results" style="display:none;">
+        <div class="card-title" style="margin-bottom:10px;">Post Ideas for <span id="planner-month-label"></span></div>
+        <div class="idea-list" id="idea-list"></div>
+
+        <div class="card-title" style="margin-bottom:8px; margin-top:4px;">Topic Coverage</div>
+        <div class="tag-list" id="topic-tags"></div>
+      </div>
+
+      <div id="planner-empty" style="color:var(--muted); font-size:.85rem;">
+        Select a month to see post ideas based on historical performance.
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: top historical posts for that month -->
+  <div>
+    <div class="card" id="planner-history-card" style="display:none;">
+      <div class="card-title">Top Posts This Month Historically</div>
+      <div class="top-posts" id="planner-top-posts"></div>
+    </div>
+  </div>
+
+</div>
+</div> <!-- end tab-planner -->
 
 <script>
 // ── State ──────────────────────────────────────────────────────────────────
-let BENCH = null;
+let BENCH   = null;
+let PLANNER = null;
 
 // ── Load benchmarks.json ───────────────────────────────────────────────────
 async function loadBenchmarks() {
   try {
-    const res = await fetch("benchmarks.json");
+    const res = await fetch("../data/benchmarks.json");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     BENCH = await res.json();
     renderLegend();
   } catch (e) {
     showError("Could not load benchmarks.json — make sure you've run build_benchmarks.py first.");
+  }
+}
+
+// ── Load planner_data.json ─────────────────────────────────────────────────
+async function loadPlanner() {
+  try {
+    const res = await fetch("../data/planner_data.json");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    PLANNER = await res.json();
+  } catch (e) {
+    console.warn("planner_data.json not loaded — run generate_planner.py first.");
+  }
+}
+
+// ── Tab switching ──────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("tab-" + name).classList.add("active");
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    if (b.textContent.toLowerCase().includes(name === "checker" ? "post" : "write")) {
+      b.classList.add("active");
+    }
+  });
+}
+
+// ── Render planner tab ─────────────────────────────────────────────────────
+function renderPlanner() {
+  const month = document.getElementById("planner-month").value;
+  if (!month || !PLANNER) return;
+
+  const data = PLANNER.months[month];
+  document.getElementById("planner-month-label").textContent = month;
+  document.getElementById("planner-results").style.display = "block";
+  document.getElementById("planner-empty").style.display   = "none";
+
+  // Post ideas
+  const ideas = data.post_ideas.map(idea => `
+    <div class="idea-card">
+      <div class="idea-topic">${idea.topic}</div>
+      <div class="idea-title">${idea.title_idea}</div>
+      <div class="idea-meta">⏱ ${idea.reading_time} &nbsp;·&nbsp; ${idea.why}</div>
+    </div>`).join("");
+  document.getElementById("idea-list").innerHTML = ideas || "<p style='color:var(--muted);font-size:.85rem;'>No ideas available for this month.</p>";
+
+  // Topic coverage tags
+  const allTopics = [
+    "Aquatics & Swim School", "Equipment Upgrades", "Facility Operations",
+    "Group Fitness", "Health & Wellness", "Programs & Enrolments", "Trainer Spotlight",
+  ];
+  const missing = data.missing_topics || [];
+  const underrep = data.underrepresented_topics || [];
+  const topTopics = (data.top_topics || []).map(t => t.topic);
+
+  const tags = allTopics.map(t => {
+    if (missing.includes(t))   return `<span class="tag tag-miss">✕ ${t}</span>`;
+    if (underrep.includes(t))  return `<span class="tag tag-low">↓ ${t}</span>`;
+    if (topTopics.includes(t)) return `<span class="tag tag-good">✓ ${t}</span>`;
+    return `<span class="tag" style="background:var(--bg);border:1px solid var(--border);color:var(--muted);">${t}</span>`;
+  }).join("");
+  document.getElementById("topic-tags").innerHTML = tags;
+
+  // Top historical posts
+  const posts = data.top_historical_posts || [];
+  if (posts.length) {
+    document.getElementById("planner-history-card").style.display = "block";
+    const rows = posts.map(p => `
+      <tr>
+        <td>${p.title}</td>
+        <td style="text-align:center;">
+          <span class="score-badge" style="background:${barColor(p.score)}22;color:${barColor(p.score)};border:1px solid ${barColor(p.score)}44;">
+            ${p.score}
+          </span>
+        </td>
+        <td style="text-align:center;">${p.read_mins} min</td>
+      </tr>`).join("");
+    document.getElementById("planner-top-posts").innerHTML = `
+      <table>
+        <thead><tr><th>Title</th><th>Score</th><th>Read</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
   }
 }
 
@@ -902,6 +1109,7 @@ document.getElementById("inp-title").addEventListener("input", getTitleLen);
 
 // ── Init ───────────────────────────────────────────────────────────────────
 loadBenchmarks();
+loadPlanner();
 </script>
 </body>
 </html>

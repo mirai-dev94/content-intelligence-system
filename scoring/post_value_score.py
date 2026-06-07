@@ -131,7 +131,7 @@ def compute_value_scores(df: pd.DataFrame) -> pd.DataFrame:
 # ── Quick CLI smoke-test ───────────────────────────────────────────────────
 if __name__ == "__main__":
     from pathlib import Path
-    path = Path(__file__).parent / "data" / "facility_news_posts_export.csv"
+    path = Path(__file__).parent.parent / "data" / "facility_news_posts_export.csv"
     df = compute_value_scores(pd.read_csv(path))
 
     cols = ["title", "topic_category", "value_score", "value_tier",

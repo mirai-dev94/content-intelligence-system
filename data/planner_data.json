@@ -1,0 +1,755 @@
+{
+  "_meta": {
+    "generated": "2026-06-07 21:42",
+    "source": "facility_news_posts_export.csv",
+    "description": "Monthly content planning data for the marketing team."
+  },
+  "months": {
+    "January": {
+      "month_num": 1,
+      "top_topics": [
+        {
+          "topic": "Aquatics & Swim School",
+          "avg_score": 60.7,
+          "posts": 8
+        },
+        {
+          "topic": "Health & Wellness",
+          "avg_score": 59.3,
+          "posts": 9
+        },
+        {
+          "topic": "Equipment Upgrades",
+          "avg_score": 55.1,
+          "posts": 1
+        }
+      ],
+      "missing_topics": [],
+      "underrepresented_topics": [
+        "Equipment Upgrades",
+        "Programs & Enrolments"
+      ],
+      "post_ideas": [
+        {
+          "topic": "Aquatics & Swim School",
+          "title_idea": "Swim School Enrolments Now Open for Term [N]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in January."
+        },
+        {
+          "topic": "Health & Wellness",
+          "title_idea": "The Surprising Health Benefits of [X]",
+          "reading_time": "2\u20134 min",
+          "why": "Historically strong performer in January."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "The Surprising Health Benefits of Hydrotherapy Swim",
+          "topic": "Health & Wellness",
+          "score": 79.3,
+          "read_mins": 3
+        },
+        {
+          "title": "Swim School Enrolments Now Open for Term 4",
+          "topic": "Aquatics & Swim School",
+          "score": 70.0,
+          "read_mins": 2
+        },
+        {
+          "title": "Notice of Limited Lane Availability: School Swimming Carnival",
+          "topic": "Aquatics & Swim School",
+          "score": 66.0,
+          "read_mins": 2
+        }
+      ]
+    },
+    "February": {
+      "month_num": 2,
+      "top_topics": [
+        {
+          "topic": "Health & Wellness",
+          "avg_score": 73.0,
+          "posts": 6
+        },
+        {
+          "topic": "Group Fitness",
+          "avg_score": 65.5,
+          "posts": 4
+        },
+        {
+          "topic": "Programs & Enrolments",
+          "avg_score": 59.9,
+          "posts": 1
+        }
+      ],
+      "missing_topics": [],
+      "underrepresented_topics": [
+        "Programs & Enrolments"
+      ],
+      "post_ideas": [
+        {
+          "topic": "Health & Wellness",
+          "title_idea": "The Surprising Health Benefits of [X]",
+          "reading_time": "2\u20134 min",
+          "why": "Historically strong performer in February."
+        },
+        {
+          "topic": "Group Fitness",
+          "title_idea": "Why You Should Add [Class] to Your Weekly Routine",
+          "reading_time": "2\u20134 min",
+          "why": "Historically strong performer in February."
+        },
+        {
+          "topic": "Programs & Enrolments",
+          "title_idea": "School Holiday Activity Program \u2013 Bookings Open!",
+          "reading_time": "1\u20133 min",
+          "why": "Historically strong performer in February."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "The Surprising Health Benefits of Aqua Aerobics",
+          "topic": "Health & Wellness",
+          "score": 82.8,
+          "read_mins": 2
+        },
+        {
+          "title": "Community Wellness Morning Tea & Seminar",
+          "topic": "Health & Wellness",
+          "score": 81.2,
+          "read_mins": 4
+        },
+        {
+          "title": "Upcoming Temporary Closure: Leisure Splash Pad Maintenance",
+          "topic": "Facility Operations",
+          "score": 81.2,
+          "read_mins": 4
+        }
+      ]
+    },
+    "March": {
+      "month_num": 3,
+      "top_topics": [
+        {
+          "topic": "Programs & Enrolments",
+          "avg_score": 78.0,
+          "posts": 3
+        },
+        {
+          "topic": "Health & Wellness",
+          "avg_score": 66.6,
+          "posts": 5
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "avg_score": 64.7,
+          "posts": 3
+        }
+      ],
+      "missing_topics": [],
+      "underrepresented_topics": [],
+      "post_ideas": [
+        {
+          "topic": "Programs & Enrolments",
+          "title_idea": "School Holiday Activity Program \u2013 Bookings Open!",
+          "reading_time": "1\u20133 min",
+          "why": "Historically strong performer in March."
+        },
+        {
+          "topic": "Health & Wellness",
+          "title_idea": "The Surprising Health Benefits of [X]",
+          "reading_time": "2\u20134 min",
+          "why": "Historically strong performer in March."
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "title_idea": "Trainer Spotlight: Meet [Name]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in March."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "School Holiday Activity Program - Bookings Open!",
+          "topic": "Programs & Enrolments",
+          "score": 82.8,
+          "read_mins": 3
+        },
+        {
+          "title": "Upcoming Temporary Closure: 50m Outdoor Pool Maintenance",
+          "topic": "Aquatics & Swim School",
+          "score": 80.2,
+          "read_mins": 4
+        },
+        {
+          "title": "Trainer Spotlight: Meet Sarah Jenkins",
+          "topic": "Trainer Spotlight",
+          "score": 79.8,
+          "read_mins": 4
+        }
+      ]
+    },
+    "April": {
+      "month_num": 4,
+      "top_topics": [
+        {
+          "topic": "Facility Operations",
+          "avg_score": 60.0,
+          "posts": 6
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "avg_score": 59.9,
+          "posts": 11
+        },
+        {
+          "topic": "Group Fitness",
+          "avg_score": 56.1,
+          "posts": 6
+        }
+      ],
+      "missing_topics": [
+        "Programs & Enrolments"
+      ],
+      "underrepresented_topics": [],
+      "post_ideas": [
+        {
+          "topic": "Facility Operations",
+          "title_idea": "[Season] Facility Opening Hours Schedule",
+          "reading_time": "1\u20132 min",
+          "why": "Historically strong performer in April."
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "title_idea": "Swim School Enrolments Now Open for Term [N]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in April."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "Swim School Enrolments Now Open for Term 2",
+          "topic": "Aquatics & Swim School",
+          "score": 87.8,
+          "read_mins": 2
+        },
+        {
+          "title": "Upcoming Temporary Closure: 25m Indoor Heated Pool Maintenance",
+          "topic": "Aquatics & Swim School",
+          "score": 84.5,
+          "read_mins": 2
+        },
+        {
+          "title": "Group Fitness Timetable Update - Effective December 2025",
+          "topic": "Group Fitness",
+          "score": 83.6,
+          "read_mins": 2
+        }
+      ]
+    },
+    "May": {
+      "month_num": 5,
+      "top_topics": [
+        {
+          "topic": "Health & Wellness",
+          "avg_score": 63.0,
+          "posts": 5
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "avg_score": 62.6,
+          "posts": 3
+        },
+        {
+          "topic": "Facility Operations",
+          "avg_score": 62.4,
+          "posts": 3
+        }
+      ],
+      "missing_topics": [],
+      "underrepresented_topics": [],
+      "post_ideas": [
+        {
+          "topic": "Health & Wellness",
+          "title_idea": "The Surprising Health Benefits of [X]",
+          "reading_time": "2\u20134 min",
+          "why": "Historically strong performer in May."
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "title_idea": "Trainer Spotlight: Meet [Name]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in May."
+        },
+        {
+          "topic": "Facility Operations",
+          "title_idea": "[Season] Facility Opening Hours Schedule",
+          "reading_time": "1\u20132 min",
+          "why": "Historically strong performer in May."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "Trainer Spotlight: Meet Michael Chang",
+          "topic": "Trainer Spotlight",
+          "score": 82.6,
+          "read_mins": 4
+        },
+        {
+          "title": "The Surprising Health Benefits of Hydrotherapy Swim",
+          "topic": "Health & Wellness",
+          "score": 80.5,
+          "read_mins": 4
+        },
+        {
+          "title": "Autumn Facility Opening Hours Schedule",
+          "topic": "Facility Operations",
+          "score": 79.9,
+          "read_mins": 3
+        }
+      ]
+    },
+    "June": {
+      "month_num": 6,
+      "top_topics": [
+        {
+          "topic": "Facility Operations",
+          "avg_score": 78.0,
+          "posts": 1
+        },
+        {
+          "topic": "Group Fitness",
+          "avg_score": 73.0,
+          "posts": 3
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "avg_score": 58.3,
+          "posts": 7
+        }
+      ],
+      "missing_topics": [
+        "Trainer Spotlight"
+      ],
+      "underrepresented_topics": [
+        "Facility Operations",
+        "Equipment Upgrades"
+      ],
+      "post_ideas": [
+        {
+          "topic": "Facility Operations",
+          "title_idea": "[Season] Facility Opening Hours Schedule",
+          "reading_time": "1\u20132 min",
+          "why": "Historically strong performer in June."
+        },
+        {
+          "topic": "Group Fitness",
+          "title_idea": "Why You Should Add [Class] to Your Weekly Routine",
+          "reading_time": "2\u20134 min",
+          "why": "Historically strong performer in June."
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "title_idea": "Swim School Enrolments Now Open for Term [N]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in June."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "Autumn Facility Opening Hours Schedule",
+          "topic": "Facility Operations",
+          "score": 78.0,
+          "read_mins": 3
+        },
+        {
+          "title": "Why You Should Add BodyPump to Your Weekly Routine",
+          "topic": "Group Fitness",
+          "score": 76.3,
+          "read_mins": 3
+        },
+        {
+          "title": "Why You Should Add Spin & Cycle to Your Weekly Routine",
+          "topic": "Group Fitness",
+          "score": 74.4,
+          "read_mins": 4
+        }
+      ]
+    },
+    "July": {
+      "month_num": 7,
+      "top_topics": [
+        {
+          "topic": "Facility Operations",
+          "avg_score": 60.3,
+          "posts": 4
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "avg_score": 60.2,
+          "posts": 7
+        },
+        {
+          "topic": "Group Fitness",
+          "avg_score": 54.8,
+          "posts": 5
+        }
+      ],
+      "missing_topics": [],
+      "underrepresented_topics": [
+        "Health & Wellness",
+        "Trainer Spotlight"
+      ],
+      "post_ideas": [
+        {
+          "topic": "Facility Operations",
+          "title_idea": "[Season] Facility Opening Hours Schedule",
+          "reading_time": "1\u20132 min",
+          "why": "Historically strong performer in July."
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "title_idea": "Swim School Enrolments Now Open for Term [N]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in July."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "Why You Should Add Senior Functional Fitness to Your Weekly Routine",
+          "topic": "Group Fitness",
+          "score": 84.8,
+          "read_mins": 3
+        },
+        {
+          "title": "Notice of Limited Lane Availability: School Swimming Carnival",
+          "topic": "Aquatics & Swim School",
+          "score": 78.7,
+          "read_mins": 4
+        },
+        {
+          "title": "Public Holiday Opening Hours - Christmas Day",
+          "topic": "Facility Operations",
+          "score": 73.6,
+          "read_mins": 3
+        }
+      ]
+    },
+    "August": {
+      "month_num": 8,
+      "top_topics": [
+        {
+          "topic": "Trainer Spotlight",
+          "avg_score": 73.1,
+          "posts": 1
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "avg_score": 68.4,
+          "posts": 1
+        },
+        {
+          "topic": "Equipment Upgrades",
+          "avg_score": 65.0,
+          "posts": 4
+        }
+      ],
+      "missing_topics": [],
+      "underrepresented_topics": [
+        "Trainer Spotlight",
+        "Aquatics & Swim School"
+      ],
+      "post_ideas": [
+        {
+          "topic": "Trainer Spotlight",
+          "title_idea": "Trainer Spotlight: Meet [Name]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in August."
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "title_idea": "Swim School Enrolments Now Open for Term [N]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in August."
+        },
+        {
+          "topic": "Equipment Upgrades",
+          "title_idea": "New Upgrade: Brand New [Equipment] Arriving Soon!",
+          "reading_time": "1\u20132 min",
+          "why": "Historically strong performer in August."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "New Upgrade: Brand New Concept2 Rowers Arriving Soon!",
+          "topic": "Equipment Upgrades",
+          "score": 84.4,
+          "read_mins": 2
+        },
+        {
+          "title": "Summer Facility Opening Hours Schedule",
+          "topic": "Facility Operations",
+          "score": 82.7,
+          "read_mins": 2
+        },
+        {
+          "title": "New Upgrade: Brand New Hammer Strength Squat Racks Arriving Soon!",
+          "topic": "Equipment Upgrades",
+          "score": 75.7,
+          "read_mins": 2
+        }
+      ]
+    },
+    "September": {
+      "month_num": 9,
+      "top_topics": [
+        {
+          "topic": "Facility Operations",
+          "avg_score": 79.9,
+          "posts": 3
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "avg_score": 79.2,
+          "posts": 1
+        },
+        {
+          "topic": "Programs & Enrolments",
+          "avg_score": 77.0,
+          "posts": 1
+        }
+      ],
+      "missing_topics": [
+        "Group Fitness"
+      ],
+      "underrepresented_topics": [
+        "Trainer Spotlight",
+        "Programs & Enrolments",
+        "Health & Wellness",
+        "Equipment Upgrades"
+      ],
+      "post_ideas": [
+        {
+          "topic": "Facility Operations",
+          "title_idea": "[Season] Facility Opening Hours Schedule",
+          "reading_time": "1\u20132 min",
+          "why": "Historically strong performer in September."
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "title_idea": "Trainer Spotlight: Meet [Name]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in September."
+        },
+        {
+          "topic": "Programs & Enrolments",
+          "title_idea": "School Holiday Activity Program \u2013 Bookings Open!",
+          "reading_time": "1\u20133 min",
+          "why": "Historically strong performer in September."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "Winter Facility Opening Hours Schedule",
+          "topic": "Facility Operations",
+          "score": 89.4,
+          "read_mins": 3
+        },
+        {
+          "title": "Trainer Spotlight: Meet James Wilson",
+          "topic": "Trainer Spotlight",
+          "score": 79.2,
+          "read_mins": 4
+        },
+        {
+          "title": "Upcoming Temporary Closure: 25m Indoor Heated Pool Maintenance",
+          "topic": "Aquatics & Swim School",
+          "score": 78.2,
+          "read_mins": 3
+        }
+      ]
+    },
+    "October": {
+      "month_num": 10,
+      "top_topics": [
+        {
+          "topic": "Programs & Enrolments",
+          "avg_score": 86.2,
+          "posts": 1
+        },
+        {
+          "topic": "Equipment Upgrades",
+          "avg_score": 54.6,
+          "posts": 2
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "avg_score": 53.2,
+          "posts": 6
+        }
+      ],
+      "missing_topics": [],
+      "underrepresented_topics": [
+        "Programs & Enrolments",
+        "Health & Wellness"
+      ],
+      "post_ideas": [
+        {
+          "topic": "Programs & Enrolments",
+          "title_idea": "School Holiday Activity Program \u2013 Bookings Open!",
+          "reading_time": "1\u20133 min",
+          "why": "Historically strong performer in October."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "School Holiday Activity Program - Bookings Open!",
+          "topic": "Programs & Enrolments",
+          "score": 86.2,
+          "read_mins": 2
+        },
+        {
+          "title": "Trainer Spotlight: Meet David Smith",
+          "topic": "Trainer Spotlight",
+          "score": 64.0,
+          "read_mins": 1
+        },
+        {
+          "title": "Public Holiday Opening Hours - Good Friday",
+          "topic": "Facility Operations",
+          "score": 63.3,
+          "read_mins": 3
+        }
+      ]
+    },
+    "November": {
+      "month_num": 11,
+      "top_topics": [
+        {
+          "topic": "Group Fitness",
+          "avg_score": 74.2,
+          "posts": 2
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "avg_score": 61.7,
+          "posts": 5
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "avg_score": 60.6,
+          "posts": 3
+        }
+      ],
+      "missing_topics": [
+        "Health & Wellness"
+      ],
+      "underrepresented_topics": [],
+      "post_ideas": [
+        {
+          "topic": "Group Fitness",
+          "title_idea": "Why You Should Add [Class] to Your Weekly Routine",
+          "reading_time": "2\u20134 min",
+          "why": "Historically strong performer in November."
+        },
+        {
+          "topic": "Aquatics & Swim School",
+          "title_idea": "Swim School Enrolments Now Open for Term [N]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in November."
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "title_idea": "Trainer Spotlight: Meet [Name]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in November."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "Why You Should Add HIIT Circuit to Your Weekly Routine",
+          "topic": "Group Fitness",
+          "score": 78.7,
+          "read_mins": 2
+        },
+        {
+          "title": "Upcoming Temporary Closure: Hydrotherapy Pool Maintenance",
+          "topic": "Aquatics & Swim School",
+          "score": 75.9,
+          "read_mins": 2
+        },
+        {
+          "title": "Trainer Spotlight: Meet James Wilson",
+          "topic": "Trainer Spotlight",
+          "score": 75.7,
+          "read_mins": 4
+        }
+      ]
+    },
+    "December": {
+      "month_num": 12,
+      "top_topics": [
+        {
+          "topic": "Programs & Enrolments",
+          "avg_score": 69.1,
+          "posts": 3
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "avg_score": 68.9,
+          "posts": 3
+        },
+        {
+          "topic": "Group Fitness",
+          "avg_score": 64.6,
+          "posts": 1
+        }
+      ],
+      "missing_topics": [],
+      "underrepresented_topics": [
+        "Group Fitness"
+      ],
+      "post_ideas": [
+        {
+          "topic": "Programs & Enrolments",
+          "title_idea": "School Holiday Activity Program \u2013 Bookings Open!",
+          "reading_time": "1\u20133 min",
+          "why": "Historically strong performer in December."
+        },
+        {
+          "topic": "Trainer Spotlight",
+          "title_idea": "Trainer Spotlight: Meet [Name]",
+          "reading_time": "2\u20133 min",
+          "why": "Historically strong performer in December."
+        },
+        {
+          "topic": "Group Fitness",
+          "title_idea": "Why You Should Add [Class] to Your Weekly Routine",
+          "reading_time": "2\u20134 min",
+          "why": "Historically strong performer in December."
+        }
+      ],
+      "top_historical_posts": [
+        {
+          "title": "Spring Facility Opening Hours Schedule",
+          "topic": "Facility Operations",
+          "score": 87.4,
+          "read_mins": 4
+        },
+        {
+          "title": "School Holiday Activity Program - Bookings Open!",
+          "topic": "Programs & Enrolments",
+          "score": 83.7,
+          "read_mins": 3
+        },
+        {
+          "title": "Community Wellness Morning Tea & Seminar",
+          "topic": "Health & Wellness",
+          "score": 82.2,
+          "read_mins": 1
+        }
+      ]
+    }
+  }
+}
