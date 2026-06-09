@@ -72,21 +72,6 @@ def top_title_formats(titles: pd.Series, n: int = 3) -> list:
     return formats.value_counts().head(n).index.tolist()
 
 
-def seasonal_gaps(df_scored: pd.DataFrame) -> dict:
-    df_scored = df_scored.copy()
-    df_scored["month_num"]  = pd.to_datetime(df_scored["post_date"]).dt.month
-    df_scored["month_name"] = pd.to_datetime(df_scored["post_date"]).dt.strftime("%B")
-    counts = df_scored.groupby(["month_num", "month_name"]).size().reset_index(name="count")
-    avg    = counts["count"].mean()
-    gaps   = counts[counts["count"] < avg * 0.80].sort_values("month_num")
-    return {
-        row["month_name"]: {
-            "posts": int(row["count"]),
-            "avg":   round(avg, 1),
-            "suggestion": "Content volume below average — plan 1–2 extra posts this month.",
-        }
-        for _, row in gaps.iterrows()
-    }
 
 
 # ── Main ───────────────────────────────────────────────────────────────────
@@ -175,51 +160,6 @@ def build():
             ],
         }
 
-    # ── Opportunity lists ──────────────────────────────────────────────────
-    undervalued = df[df["flag_undervalued"]].nlargest(10, "value_score")
-    overexposed = df[df["flag_overexposed"]].nlargest(10, "view_count")
-
-    def post_row(row, action):
-        return {
-            "title":          row["title"],
-            "topic_category": row["topic_category"],
-            "value_score":    r(row["value_score"]),
-            "views":          int(row["view_count"]),
-            "seo_linkdex":    int(row["seo_linkdex"]),
-            "seo_content":    int(row["seo_content_score"]),
-            "action":         action,
-        }
-
-    opportunities = {
-        "undervalued": [
-            post_row(row, "High SEO strength but low visibility — push via social or internal linking.")
-            for _, row in undervalued.iterrows()
-        ],
-        "overexposed": [
-            post_row(row, "Getting traffic but weak SEO — optimise meta, headings & keyword use to lock in organic growth.")
-            for _, row in overexposed.iterrows()
-        ],
-    }
-
-    # ── Gap analysis ───────────────────────────────────────────────────────
-    # Topic gaps: categories below overall average value score
-    cat_avg     = df.groupby("topic_category")["value_score"].mean().round(1)
-    global_avg  = cat_avg.mean()
-    topic_gaps  = {
-        cat: {
-            "avg_value_score": float(score),
-            "vs_overall":      round(float(score) - global_avg, 1),
-            "suggestion":      "Below-average pillar — review SEO quality and content depth for this category.",
-        }
-        for cat, score in cat_avg.items() if score < global_avg
-    }
-
-    gap_analysis = {
-        "overall_avg_value_score": r(global_avg),
-        "underperforming_topics":  topic_gaps,
-        "seasonal_gaps":           seasonal_gaps(df),
-    }
-
     # ── Guidance rules (used by HTML checker) ─────────────────────────────
     guidance = {
         "tiers": {
@@ -259,19 +199,14 @@ def build():
                 "estimated_reading_time_minutes": 0.20,
             }.items()},
         },
-        "overall":       overall,
-        "by_topic":      by_topic,
-        "opportunities": opportunities,
-        "gap_analysis":  gap_analysis,
-        "guidance":      guidance,
+        "overall":   overall,
+        "by_topic":  by_topic,
+        "guidance":  guidance,
     }
 
     OUTPUT_PATH.write_text(json.dumps(out, indent=2, default=str))
     print(f"\n✅  benchmarks.json written → {OUTPUT_PATH}")
     print(f"    Topics : {', '.join(by_topic.keys())}")
-    print(f"    Undervalued posts : {len(opportunities['undervalued'])}")
-    print(f"    Overexposed posts : {len(opportunities['overexposed'])}")
-    print(f"    Seasonal gaps     : {', '.join(gap_analysis['seasonal_gaps'].keys()) or 'none'}")
 
 
 if __name__ == "__main__":
