@@ -65,7 +65,7 @@
     header p   { font-size: .82rem; color: var(--muted); margin-top: 1px; }
 
     .page {
-      max-width: 1100px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 32px 24px;
       display: grid;
@@ -161,7 +161,6 @@
     }
 
     /* ── Results panel ────────────────────────────────────────────── */
-    #results { display: none; }
 
     /* Score hero */
     .score-hero {
@@ -258,6 +257,74 @@
     }
     .formats-list li:last-child { border: none; }
     .formats-list li::before { content: "→"; color: var(--accent); font-weight: 700; }
+
+    /* ── AI Suggestions ───────────────────────────────────────────── */
+    .btn-ai {
+      width: 100%;
+      padding: 11px;
+      background: #7c3aed;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+      margin-bottom: 4px;
+    }
+    .btn-ai:hover    { background: #6d28d9; }
+    .btn-ai:disabled { background: #c4b5fd; cursor: not-allowed; }
+
+    .ai-result {
+      border: 1px solid #e9d5ff;
+      border-radius: 8px;
+      padding: 16px;
+      background: #faf5ff;
+      font-size: .83rem;
+      line-height: 1.55;
+    }
+    .ai-result .ai-section-title {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #7c3aed;
+      margin-bottom: 8px;
+      margin-top: 12px;
+    }
+    .ai-result .ai-section-title:first-child { margin-top: 0; }
+    .ai-result .ai-tip {
+      background: #fff;
+      border: 1px solid #e9d5ff;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 6px;
+      color: #1a1d23;
+    }
+    .ai-result .ai-tip::before { content: "→ "; color: #7c3aed; font-weight: 700; }
+    .ai-result .ai-overall {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: #ede9fe;
+      border-radius: 6px;
+      color: #4c1d95;
+      font-weight: 600;
+      font-size: .82rem;
+    }
+    .ai-spinner {
+      text-align: center;
+      padding: 20px 0;
+      color: #7c3aed;
+      font-size: .85rem;
+    }
+    .ai-spinner .spin {
+      width: 24px; height: 24px;
+      border: 2px solid #e9d5ff;
+      border-top-color: #7c3aed;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      margin: 0 auto 8px;
+    }
 
     /* Guidance box */
     .guidance-box {
@@ -425,7 +492,7 @@
   </svg>
   <div>
     <h1>Marketing Content Optimizer</h1>
-    <p>Marketing Content Optimization System · v3</p>
+    <p>Marketing Content Optimization System · v5</p>
   </div>
 </header>
 
@@ -436,10 +503,12 @@
 
 <!-- ── Tab 1: Post Checker ───────────────────────────────────────── -->
 <div id="tab-checker" class="tab-panel active">
-<div class="page">
+<div style="max-width:1400px; padding:32px 32px;">
 
-  <!-- ── Left: Input form ──────────────────────────────────────── -->
-  <div>
+  <!-- ── Top section: form left, score right ───────────────────── -->
+  <div style="display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:stretch; margin-bottom:24px;">
+
+    <!-- Left: form -->
     <div class="card">
       <div class="card-title">Check a new post</div>
 
@@ -447,6 +516,8 @@
         <label>Post Title</label>
         <input type="text" id="inp-title" placeholder="e.g. Why You Should Add Yoga Flow to Your Weekly Routine" maxlength="120" />
         <div class="char-count"><span id="title-len">0</span> / 120</div>
+        <!-- AI title suggestions inline -->
+        <div id="ai-title-suggestions" style="display:none; margin-top:10px;"></div>
       </div>
 
       <div class="field">
@@ -467,28 +538,25 @@
         <label>Content Body <span>(paste your draft here)</span></label>
         <textarea id="inp-content" placeholder="Paste your full post content…"></textarea>
         <div class="char-count"><span id="word-count">0</span> words · est. <span id="read-time">0</span> min read</div>
+        <!-- AI content suggestions inline -->
+        <div id="ai-content-suggestions" style="display:none; margin-top:10px;"></div>
       </div>
 
-      <button class="btn" id="btn-check" onclick="runCheck()">Analyse Post</button>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <button class="btn" id="btn-check" onclick="runCheck()">Analyse Post</button>
+        <button class="btn-ai" id="btn-ai" onclick="getAISuggestions()">✨ Get AI Suggestions</button>
+      </div>
       <div class="error-banner" id="error-msg"></div>
     </div>
 
-    <!-- Results inject here on mobile -->
-    <div id="results-mobile"></div>
-  </div>
-
-  <!-- ── Right: Results + sidebar ──────────────────────────────── -->
-  <div>
-    <div id="loader">
-      <div class="spinner"></div>
-      Analysing post…
-    </div>
-
-    <div id="results">
-      <!-- Score hero -->
-      <div class="card" style="margin-bottom:16px;">
+    <!-- Right: score (stretches to match form height) -->
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div id="loader" style="display:none;">
+        <div class="spinner"></div>
+        Analysing post…
+      </div>
+      <div id="score-card" class="card" style="display:none; flex:0 0 auto;">
         <div class="score-hero" id="hero"></div>
-
         <div class="score-bar-wrap">
           <div class="score-bar-track">
             <div class="score-bar-fill" id="score-bar"></div>
@@ -501,47 +569,47 @@
             <span>100</span>
           </div>
         </div>
-
         <div class="dim-list" id="dimensions"></div>
       </div>
-
-      <!-- Actionable guidance -->
-      <div class="card" style="margin-bottom:16px;">
+      <div id="guidance-card" class="card" style="display:none; flex:1;">
         <div class="card-title">Actionable Guidance</div>
         <div id="guidance-boxes"></div>
       </div>
+    </div>
+  </div>
 
-      <!-- Suggestions -->
-      <div class="card" style="margin-bottom:16px;">
-        <div class="card-title">Suggestions</div>
-        <div class="suggestion-list" id="suggestions"></div>
-      </div>
+  <!-- ── Bottom section: full width ────────────────────────────── -->
+  <div id="bottom-sections" style="display:none;">
 
-      <!-- Post brief template -->
-      <div class="card" style="margin-bottom:16px;">
+    <!-- Post brief + Top posts side by side -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px;">
+      <div class="card">
         <div class="card-title">Post Brief — Benchmark for this Category</div>
         <div id="brief-section"></div>
       </div>
-
-      <!-- Top posts in category -->
       <div class="card">
         <div class="card-title">Top Posts in This Category</div>
         <div class="top-posts" id="top-posts-table"></div>
       </div>
     </div>
 
-    <!-- Benchmark legend (always visible) -->
-    <div class="card" style="margin-top:16px;" id="legend-card">
-      <div class="card-title">Overall Benchmarks</div>
-      <div id="legend-content"></div>
+    <!-- Overall benchmarks — collapsed -->
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleBenchmarks()">
+        <div class="card-title" style="margin-bottom:0;">Overall Benchmarks</div>
+        <span id="bench-toggle" style="font-size:.8rem; color:var(--muted);">▼ Show</span>
+      </div>
+      <div id="legend-content" style="display:none; margin-top:14px;"></div>
     </div>
+
   </div>
+
 </div>
 </div> <!-- end tab-checker -->
 
 <!-- ── Tab 2: What to Write ─────────────────────────────────────── -->
 <div id="tab-planner" class="tab-panel">
-<div class="page" style="grid-template-columns: 1fr 380px;">
+<div style="max-width:1400px; padding:32px 32px; display:grid; grid-template-columns:1fr 380px; gap:24px; align-items:start;">
 
   <!-- Left: month picker + post ideas -->
   <div>
@@ -592,23 +660,37 @@ let PLANNER = null;
 // ── Load benchmarks.json ───────────────────────────────────────────────────
 async function loadBenchmarks() {
   try {
-    const res = await fetch("../data/benchmarks.json");
+    const res = await fetch("/data/benchmarks.json");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     BENCH = await res.json();
     renderLegend();
   } catch (e) {
-    showError("Could not load benchmarks.json — make sure you've run build_benchmarks.py first.");
+    // Fallback for static server (python3 -m http.server)
+    try {
+      const res2 = await fetch("../data/benchmarks.json");
+      if (!res2.ok) throw new Error(`HTTP ${res2.status}`);
+      BENCH = await res2.json();
+      renderLegend();
+    } catch {
+      showError("Could not load benchmarks.json — make sure you've run build_benchmarks.py first.");
+    }
   }
 }
 
 // ── Load planner_data.json ─────────────────────────────────────────────────
 async function loadPlanner() {
   try {
-    const res = await fetch("../data/planner_data.json");
+    const res = await fetch("/data/planner_data.json");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     PLANNER = await res.json();
-  } catch (e) {
-    console.warn("planner_data.json not loaded — run generate_planner.py first.");
+  } catch {
+    try {
+      const res2 = await fetch("../data/planner_data.json");
+      if (!res2.ok) throw new Error();
+      PLANNER = await res2.json();
+    } catch {
+      console.warn("planner_data.json not loaded — run generate_planner.py first.");
+    }
   }
 }
 
@@ -1006,6 +1088,15 @@ function renderTopPosts(posts) {
   </table>`;
 }
 
+// ── Toggle benchmarks ──────────────────────────────────────────────────────
+function toggleBenchmarks() {
+  const content = document.getElementById("legend-content");
+  const toggle  = document.getElementById("bench-toggle");
+  const visible = content.style.display !== "none";
+  content.style.display = visible ? "none" : "block";
+  toggle.textContent    = visible ? "▼ Show" : "▲ Hide";
+}
+
 // ── Legend sidebar ─────────────────────────────────────────────────────────
 function renderLegend() {
   if (!BENCH) return;
@@ -1036,8 +1127,9 @@ function runCheck() {
   if (!BENCH)    { showError("Benchmarks not loaded. Check that benchmarks.json exists."); return; }
 
   // Show loader
-  document.getElementById("loader").style.display  = "block";
-  document.getElementById("results").style.display = "none";
+  document.getElementById("loader").style.display       = "block";
+  document.getElementById("score-card").style.display    = "none";
+  document.getElementById("guidance-card").style.display = "none";
   document.getElementById("btn-check").disabled     = true;
 
   setTimeout(() => {
@@ -1072,9 +1164,15 @@ function runCheck() {
       document.getElementById("guidance-boxes").innerHTML =
         buildGuidance(tier, readMins, category, score, bench);
 
-      // ── Suggestions
-      document.getElementById("suggestions").innerHTML =
-        buildSuggestions(title, content, category);
+      // ── Reset AI section
+      document.getElementById("ai-title-suggestions").style.display = "none";
+      document.getElementById("ai-title-suggestions").innerHTML = "";
+      document.getElementById("ai-content-suggestions").style.display = "none";
+      document.getElementById("ai-content-suggestions").innerHTML = "";
+      document.getElementById("btn-ai").disabled = false;
+
+      // ── Show bottom sections
+      document.getElementById("bottom-sections").style.display = "block";
 
       // ── Brief template
       document.getElementById("brief-section").innerHTML = renderBrief(bench);
@@ -1084,8 +1182,9 @@ function runCheck() {
         renderTopPosts(bench.top_posts);
 
       // Show results
-      document.getElementById("loader").style.display  = "none";
-      document.getElementById("results").style.display = "block";
+      document.getElementById("loader").style.display       = "none";
+      document.getElementById("score-card").style.display    = "block";
+      document.getElementById("guidance-card").style.display = "block";
     } catch (err) {
       showError("Scoring error: " + err.message);
       document.getElementById("loader").style.display = "none";
@@ -1101,6 +1200,70 @@ function showError(msg) {
 }
 function clearError() {
   document.getElementById("error-msg").style.display = "none";
+}
+
+// ── AI Suggestions ─────────────────────────────────────────────────────────
+async function getAISuggestions() {
+  const title    = document.getElementById("inp-title").value.trim();
+  const category = document.getElementById("inp-category").value;
+  const content  = document.getElementById("inp-content").value.trim();
+
+  if (!title || !category || !content) {
+    showError("Please fill in all fields before getting AI suggestions.");
+    return;
+  }
+
+  const btn = document.getElementById("btn-ai");
+  btn.disabled = true;
+
+  // Show spinners inline
+  const spinner = `<div class="ai-spinner"><div class="spin"></div>Generating…</div>`;
+  const titleEl   = document.getElementById("ai-title-suggestions");
+  const contentEl = document.getElementById("ai-content-suggestions");
+  titleEl.innerHTML   = spinner;
+  titleEl.style.display = "block";
+  contentEl.innerHTML   = spinner;
+  contentEl.style.display = "block";
+
+  try {
+    const res = await fetch("/api/suggest", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, category, content }),
+    });
+
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    const data = await res.json();
+
+    // Title suggestions inline under title field
+    const titleItems = (data.title_suggestions || [])
+      .map(t => `<div class="ai-tip">${t}</div>`).join("");
+    titleEl.innerHTML = `
+      <div class="ai-result">
+        <div class="ai-section-title">✨ AI Title Ideas</div>
+        ${titleItems || "<div class='ai-tip'>No suggestions returned.</div>"}
+      </div>`;
+
+    // Content suggestions inline under content field
+    const contentItems = (data.content_suggestions || [])
+      .map(c => `<div class="ai-tip">${c}</div>`).join("");
+    const overall = data.overall_tip
+      ? `<div class="ai-overall">💡 ${data.overall_tip}</div>` : "";
+    contentEl.innerHTML = `
+      <div class="ai-result">
+        <div class="ai-section-title">✨ AI Content Improvements</div>
+        ${contentItems || "<div class='ai-tip'>No suggestions returned.</div>"}
+        ${overall}
+      </div>`;
+
+  } catch (err) {
+    const errMsg = `<div style="color:var(--red);font-size:.83rem;">
+      Could not reach AI service — make sure app.py is running and your GEMINI_API_KEY is set in .env
+    </div>`;
+    titleEl.innerHTML   = errMsg;
+    contentEl.innerHTML = errMsg;
+  }
+  btn.disabled = false;
 }
 
 // ── Events ─────────────────────────────────────────────────────────────────
